@@ -1,0 +1,258 @@
+// this desperateley need to be seperated 
+const { models: { Pool, PoolBody, PoolPrediction, PoolFHAVA } } = require('../db');
+const fs = require("fs");
+const fastcsv = require("fast-csv");
+
+
+// a function to stream non changing data by month
+async function poolStreamer(csv) {
+
+  let streamMonthPools = fs.createReadStream(csv)
+  let csvMonthPools = [];
+  let csvStreamMonthPools = fastcsv
+  .parse({
+    delimiter: '|'
+  })
+  .on("data", function(data) {
+    // console.log('here')
+    csvMonthPools.push(data);
+  })
+  .on("end", async function() {
+    for (let i = 0; i < csvMonthPools.length; i++ ){
+    // for (let i = 0; i < 10; i++ ){    
+      // console.log("------------------------------------");
+      // console.log(i);
+      // console.log(csvPools[i][0]);
+      if (csvMonthPools[i][0] === 'PS' ){
+        // console.log("------------------------------------");
+        // console.log(csvPools[i]);
+        let pool = await Pool.findByPk(csvMonthPools[i][1])
+
+        if(!pool){
+          try {
+          await Pool.create({ cusip: csvMonthPools[i][1], name: csvMonthPools[i][2], indicator: csvMonthPools[i][3], type: csvMonthPools[i][4], 
+              issueDate: csvMonthPools[i][5], maturityDate: csvMonthPools[i][7], originalFace: csvMonthPools[i][8]})
+          }
+          catch(ex){
+            console.log(ex)
+          }
+        }  
+      }
+    }
+
+
+
+  });
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  // console.log(streamMonthPools);
+  // await streamAprilData.pipe(csvAprilStream);
+  await streamMonthPools.pipe(csvStreamMonthPools);
+}
+
+  let streamPools = fs.createReadStream('data/poolsCompiled/pools.csv')
+  let csvPools = [];
+  let csvStreamPools = fastcsv
+  .parse()
+  .on("data", function(data) {
+    // console.log('here')
+    csvPools.push(data);
+  })
+  .on("end", async function() {
+    for (let i = 1; i < csvPools.length; i++ ){
+     
+      try {
+        // cusip,name,type,indicator,issueDate,maturityDate,originalFace
+      await Pool.create({ cusip: csvPools[i][0], name: csvPools[i][1], type: csvPools[i][2], indicator: csvPools[i][3],  
+          issueDate: csvPools[i][4], maturityDate: csvPools[i][5], originalFace: csvPools[i][6]})
+      }
+      catch(ex){
+        console.log(ex)
+      }
+    }
+  });
+
+
+  
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  const poolBodyStreamer = async(csv, month) => {
+    let streamMonthPoolBodies = fs.createReadStream(csv)
+    let csvPoolMonthBodies = [];
+    let csvStreamMonthPoolBodies = fastcsv
+    .parse({
+      delimiter: '|'
+    })
+    .on("data", function(data) {
+      // console.log('here')
+      if (data === ''){
+        data = null
+        console.log(data)
+      } 
+      csvPoolMonthBodies.push(data);
+    })
+    .on("end", async function() {
+      for (let i = 0; i < csvPoolMonthBodies.length; i++ ){
+      // for (let i = 0; i < 10; i++ ){    
+
+        // console.log("------------------------------------");
+        // console.log(i);
+        // console.log(csvPools[i][0]);
+
+        if (csvPoolMonthBodies[i][0] === 'PS' ){
+          // console.log("------------------------------------");
+          // console.log(csvPoolBodies[i][1]);
+          // 36202BYW9 does not have 
+
+          if (csvPoolMonthBodies[i][17] === ''){
+            csvPoolMonthBodies[i][17] = null;
+          }
+          if (csvPoolMonthBodies[i][18] === ''){
+            csvPoolMonthBodies[i][18] = null;
+          }
+          if (csvPoolMonthBodies[i][19] === ''){
+            csvPoolMonthBodies[i][19] = null;
+          }
+
+          try {
+            await PoolBody.create({ cusip: csvPoolMonthBodies[i][1], interestRate: csvPoolMonthBodies[i][6], remainingBalance: csvPoolMonthBodies[i][9], 
+            factor: csvPoolMonthBodies[i][10], GWAC: csvPoolMonthBodies[i][17], WAM: csvPoolMonthBodies[i][18], WALA: csvPoolMonthBodies[i][19], month: month})
+          }
+            catch(ex){
+            console.log(ex)
+          }
+        }
+      }
+    });
+
+    await streamMonthPoolBodies.pipe(csvStreamMonthPoolBodies);
+}
+
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  let streamPoolBodies = fs.createReadStream('data/poolsCompiled/poolbodies.csv')
+  let csvPoolBodies = [];
+  let csvStreamPoolBodies = fastcsv
+  .parse()
+  .on("data", function(data) {
+    csvPoolBodies.push(data);
+  })
+  .on("end", async function() {
+    for (let i = 0; i < csvPoolBodies.length; i++ ){
+    
+      // id,interestRate,remainingBalance,factor,GWAC,WAM,WALA,month,poolCusip
+      if (csvPoolBodies[i][4] === ''){
+        csvPoolBodies[i][4] = null;
+      }
+      if (csvPoolBodies[i][5] === ''){
+        csvPoolBodies[i][5] = null;
+      }
+      if (csvPoolBodies[i][6] === ''){
+        csvPoolBodies[i][6] = null;
+      }
+
+        try {
+          await PoolBody.create({ id: csvPoolBodies[i][0], interestRate: csvPoolBodies[i][1], remainingBalance: csvPoolBodies[i][2], 
+          factor: csvPoolBodies[i][3], GWAC: csvPoolBodies[i][4], WAM: csvPoolBodies[i][5], WALA: csvPoolBodies[i][6], month: csvPoolBodies[i][7], poolCusip: csvPoolBodies[i][8]})
+        }
+          catch(ex){
+          console.log(ex)
+        }
+      }
+  });
+
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  let streamPoolsPrediction = fs.createReadStream('data/pools/ginnie_202106_monthly_predictions_roll.csv') 
+  let csvPoolPrediction = [];
+  let csvStreamPoolsPredication = fastcsv
+  .parse()
+  .on("data", function(data) {
+    // console.log('here')
+    csvPoolPrediction.push(data);
+  })
+  .on("end", async function() {
+    for (let i = 1; i < csvPoolPrediction.length; i++ ){
+    // for (let i = 1; i < 10; i++ ){    
+
+    // so need to search throug poolbodies for cusip and month get the id and use that to set the poolprediction ID all non connected ones will be lost 
+
+
+        try {
+
+          // let poolBody = await PoolBody.findOne({ where: {poolCusip: csvPoolPrediction[i][0], month: "APRIL"}})
+          // if (poolBody){
+
+              // await PoolPrediction.create({ cusip: csvPoolPrediction[i][0], totalOutstanding: csvPoolPrediction[i][1], vpr: csvPoolPrediction[i][2], vprNext: csvPoolPrediction[i][3], 
+              // cdr: csvPoolPrediction[i][4], cdrNext: csvPoolPrediction[i][5], cpr: csvPoolPrediction[i][6], cprNext: csvPoolPrediction[i][7], poolbodyId: poolBody.id})
+
+              await PoolPrediction.create({ cusip: csvPoolPrediction[i][0], totalOutstanding: csvPoolPrediction[i][1], vpr: csvPoolPrediction[i][2], vprNext: csvPoolPrediction[i][3], 
+                cdr: csvPoolPrediction[i][4], cdrNext: csvPoolPrediction[i][5], cpr: csvPoolPrediction[i][6], cprNext: csvPoolPrediction[i][7], month: 'MAY'})
+          // }
+          }
+            catch(ex){
+              console.log(ex)
+            }
+
+
+      }
+
+    });
+
+
+    
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    let streamPoolsFHAVA = fs.createReadStream('data/pools/FHAVATest_20210615.csv') 
+    let csvPoolFHAVA = [];
+    let csvStreamPoolsFHAVA = fastcsv
+    .parse()
+    .on("data", function(data) {
+      // console.log('here')
+      csvPoolFHAVA.push(data);
+    })
+    .on("end", async function() {
+      for (let i = 0; i < csvPoolFHAVA.length; i++ ){
+      // for (let i = 1; i < 10; i++ ){    
+  
+      // so need to search throug poolbodies for cusip and month get the id and use that to set the poolprediction ID all non connected ones will be lost 
+  
+  
+          try {
+  
+            // let poolBody = await PoolBody.findOne({ where: {poolCusip: csvPoolPrediction[i][0], month: "APRIL"}})
+            // if (poolBody){
+  
+                // await PoolPrediction.create({ cusip: csvPoolPrediction[i][0], totalOutstanding: csvPoolPrediction[i][1], vpr: csvPoolPrediction[i][2], vprNext: csvPoolPrediction[i][3], 
+                // cdr: csvPoolPrediction[i][4], cdrNext: csvPoolPrediction[i][5], cpr: csvPoolPrediction[i][6], cprNext: csvPoolPrediction[i][7], poolbodyId: poolBody.id})
+  
+                await PoolFHAVA.create({ cusip: csvPoolFHAVA[i][0], fha: csvPoolFHAVA[i][1], va: csvPoolFHAVA[i][2], rural: csvPoolFHAVA[i][3], 
+                  indian: csvPoolFHAVA[i][4], month: 'MAY' })
+            // }
+            }
+              catch(ex){
+                console.log(ex)
+              }
+  
+  
+        }
+  
+      });
+
+
+// CUSIP,total_outstanding,VPR,VPR_next,CDR,CDR_next,CPR,CPR_next
+  
+module.exports = {
+  poolStreamer,
+  poolBodyStreamer,
+  streamPools,
+  csvStreamPools,
+  streamPoolBodies,
+  csvStreamPoolBodies,
+  streamPoolsPrediction,
+  csvStreamPoolsPredication,
+  streamPoolsFHAVA,
+  csvStreamPoolsFHAVA
+};
