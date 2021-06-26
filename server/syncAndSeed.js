@@ -20,6 +20,10 @@ const {
   csvStreamPoolsFHAVA
         } = require('./synchAndSeedHelpers/pools.js');
 
+const {
+  platinumStreamer
+    } = require('./synchAndSeedHelpers/platinums.js');
+
 
   // this is for the table I have not tackled yet 
   let streamCPN = fs.createReadStream('data/cpn.csv');
@@ -72,11 +76,15 @@ const {
     
     // poolStreamer('data/pools/monthlySFPS_202104.csv')
     // poolStreamer('data/pools/monthlySFPS_202105.csv')
+
     // poolBodyStreamer('data/pools/monthlySFPS_202104.csv', 'APRIL')
     // poolBodyStreamer('data/pools/monthlySFPS_202105.csv', 'MAY');
+    
     // streamPoolsPrediction.pipe(csvStreamPoolsPredication)
     // streamPoolsFHAVA.pipe(csvStreamPoolsFHAVA)
 
+    // platinumStreamer('data/platinums/platmonPPS_202105.csv')
+    
   };
 
   
