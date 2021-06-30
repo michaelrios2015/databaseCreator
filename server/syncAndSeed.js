@@ -21,7 +21,8 @@ const {
         } = require('./synchAndSeedHelpers/pools.js');
 
 const {
-  platinumStreamer
+  platinumStreamer,
+  platinumBodyStreamer
     } = require('./synchAndSeedHelpers/platinums.js');
 
 
@@ -84,7 +85,7 @@ const {
     // streamPoolsFHAVA.pipe(csvStreamPoolsFHAVA)
 
     // platinumStreamer('data/platinums/platmonPPS_202105.csv')
-    
+    // platinumBodyStreamer('data/platinums/platmonPPS_202105.csv', 'MAY')
   };
 
   

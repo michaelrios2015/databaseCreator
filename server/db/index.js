@@ -7,6 +7,7 @@ const PoolBody = require("./models/PoolBody");
 const PoolPrediction = require("./models/PoolPrediction");
 const PoolFHAVA = require("./models/PoolFHAVA");
 const Platinum = require("./models/Platinum");
+const PlatinumBody = require("./models/PlatinumBody");
 
 
 CMOHeader.hasMany(CMOBody);
@@ -30,6 +31,7 @@ module.exports = {
 		PoolBody,
 		PoolPrediction,
 		PoolFHAVA,
-		Platinum
+		Platinum,
+		PlatinumBody
 	},
 };
