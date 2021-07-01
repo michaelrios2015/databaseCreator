@@ -1,10 +1,10 @@
 // this desperateley need to be seperated 
-const { models: { Platinum, PlatinumBody } } = require('../db');
+const { models: { Platinum, PlatinumBody, Collateral } } = require('../db');
 const fs = require("fs");
 const fastcsv = require("fast-csv");
 
 
-// a function to stream non changing data by month
+// a function to stream non changing data by month, I assume it changes each month but not sure
 async function platinumStreamer(csv) {
 
   let streamMonthPlatinums = fs.createReadStream(csv)
@@ -50,6 +50,7 @@ async function platinumStreamer(csv) {
 
 
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// this adds the changing monthly data 
 
 const platinumBodyStreamer = async(csv, month) => {
   let streamMonthPlatinumBodies = fs.createReadStream(csv)
@@ -102,8 +103,52 @@ const platinumBodyStreamer = async(csv, month) => {
 
   await streamMonthPlatinumBodies.pipe(csvStreamMonthPlatinumBodies);
 }
-  
+
+// ------------------------------------------------------------------------------------------------
+// first attempt at dealing with the collaterals
+
+async function collateralStreamer(csv) {
+
+  let streamMonthCollateral = fs.createReadStream(csv)
+  let csvMonthCollateral = [];
+  let csvStreamMonthCollateral = fastcsv
+  .parse()
+  .on("data", function(data) {
+    // console.log('here')
+    csvMonthCollateral.push(data);
+  })
+  .on("end", async function() {
+    for (let i = 0; i < csvMonthCollateral.length; i++ ){
+    // for (let i = 0; i < 1000; i++ ){
+
+      const cusip = csvMonthCollateral[i][0].slice(0, 9);
+      const poolname = csvMonthCollateral[i][0].slice(19, 25);
+      const faceinplatinum = csvMonthCollateral[i][0].slice(53, 68);
+
+      // console.log(cusip);
+      // console.log(poolname);
+      // console.log(faceinplatinum);
+
+      try {
+      await Collateral.create({ cusip, poolname, faceinplatinum })
+      }
+      catch(ex){
+        console.log(ex)
+      }
+    
+    }
+  });
+
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  await streamMonthCollateral.pipe(csvStreamMonthCollateral);
+}
+
+
+
+
 module.exports = {
   platinumStreamer,
-  platinumBodyStreamer
+  platinumBodyStreamer,
+  collateralStreamer
 };
