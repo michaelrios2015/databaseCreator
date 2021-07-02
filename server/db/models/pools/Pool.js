@@ -1,4 +1,4 @@
-const db = require('../db')
+const db = require('../../db')
 const Sequelize = require('sequelize');
 const Moment = require('moment');
 const { INTEGER, STRING, FLOAT, VIRTUAL } = Sequelize;
@@ -12,10 +12,10 @@ const Pool = db.define('pools', {
   name: { 
     type: STRING, 
   },
-  type: { 
+  indicator: { 
     type: STRING, 
   },
-  indicator: { 
+  type: { 
     type: STRING, 
   },
   issueDate: { 

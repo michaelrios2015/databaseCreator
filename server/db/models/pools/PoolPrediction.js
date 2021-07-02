@@ -1,23 +1,32 @@
-const db = require('../db')
+const db = require('../../db')
 const Sequelize = require('sequelize');
 const { INTEGER, STRING, FLOAT } = Sequelize;
 
 
-const PoolFHAVA = db.define('poolfhavas', {
+const PoolPrediction = db.define('poolpredictions', {
   cusip: { 
     type: STRING,
     primaryKey: true  
   },
-  fha: { 
+  totalOutstanding: { 
     type: FLOAT, 
   },
-  va: { 
+  vpr: { 
     type: FLOAT, 
   },
-  rural: { 
+  vprNext: { 
     type: FLOAT, 
   },
-  indian: { 
+  cdr: { 
+    type: FLOAT, 
+  },
+  cdrNext: { 
+    type: FLOAT, 
+  },
+  cpr: { 
+    type: FLOAT, 
+  },
+  cprNext: { 
     type: FLOAT, 
   },
   month: { 
@@ -26,4 +35,5 @@ const PoolFHAVA = db.define('poolfhavas', {
 },{ timestamps: false });
 
 
-module.exports = PoolFHAVA;
+module.exports = PoolPrediction;
+
