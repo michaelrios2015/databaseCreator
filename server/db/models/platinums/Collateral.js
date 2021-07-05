@@ -12,6 +12,9 @@ const Collateral = db.define('collaterals', {
   },
   faceinplatinum: { 
     type: FLOAT, 
+  },
+  month: {
+    type: STRING
   }      
 },{ timestamps: false });
 

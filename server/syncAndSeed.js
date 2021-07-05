@@ -87,7 +87,7 @@ const {
 
     // platinumStreamer('data/platinums/platmonPPS_202105.csv')
     // platinumBodyStreamer('data/platinums/platmonPPS_202105.csv', 'MAY')
-    // collateralStreamer('data/platinums/platcoll_202105.csv');
+    // collateralStreamer('data/platinums/platcoll_202105.csv', 'MAY');
   };
 
   

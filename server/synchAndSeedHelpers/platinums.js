@@ -107,7 +107,7 @@ const platinumBodyStreamer = async(csv, month) => {
 // ------------------------------------------------------------------------------------------------
 // first attempt at dealing with the collaterals
 
-async function collateralStreamer(csv) {
+async function collateralStreamer(csv, month) {
 
   let streamMonthCollateral = fs.createReadStream(csv)
   let csvMonthCollateral = [];
@@ -130,7 +130,7 @@ async function collateralStreamer(csv) {
       // console.log(faceinplatinum);
 
       try {
-      await Collateral.create({ cusip, poolname, faceinplatinum })
+      await Collateral.create({ cusip, poolname, faceinplatinum, month })
       }
       catch(ex){
         console.log(ex)
