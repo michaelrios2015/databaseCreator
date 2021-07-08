@@ -6,20 +6,6 @@ const { db, models: { Pool, PoolBody, PoolPrediction } } = require('../../db');
 
 router.get('/', async(req, res, next)=> {
   try {
-    // console.log(await Pool.findAll())
-  //   let results = await Pool.findAndCountAll({ 
-  //     include: [{
-  //     model: PoolBody, 
-  //     // required: true,
-  //       include: {
-  //         required: true,
-  //         model: PoolPrediction,
-
-  //       }
-  //     },
-  //   ],
-  //   limit: 10
-  // })
 
   let [results, _] = (await db.query(
     // 'SELECT pools.cusip, poolbodies."poolCusip", poolpredictions.cusip as ppCusip ' +
