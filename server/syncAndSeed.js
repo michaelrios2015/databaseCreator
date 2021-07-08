@@ -85,6 +85,9 @@ const {
     // streamPoolsPrediction.pipe(csvStreamPoolsPredication)
     // streamPoolsFHAVA.pipe(csvStreamPoolsFHAVA)
 
+
+    // -----------Building Platinums one csv file at a time--------------
+
     // platinumStreamer('data/platinums/platmonPPS_202105.csv')
     // platinumBodyStreamer('data/platinums/platmonPPS_202105.csv', 'MAY')
     // collateralStreamer('data/platinums/platcoll_202105.csv', 'MAY');
