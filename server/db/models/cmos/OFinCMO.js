@@ -3,46 +3,24 @@ const Sequelize = require('sequelize');
 const { STRING, FLOAT } = Sequelize;
 
 
-// const OFinCMO = db.define('cmobody', {
-//   month: { 
-//     type: STRING, 
-//   },
-//   actualCpr: { 
-//     type: FLOAT, 
-//   },
-//   residual: { 
-//     type: FLOAT, 
-//   },
-//   cpr: { 
-//     type: FLOAT, 
-//   },
-//   cprNext: { 
-//     type: FLOAT, 
-//   },
-//   vpr: { 
-//     type: FLOAT, 
-//   }, 
-//   vprNext: { 
-//     type: FLOAT, 
-//   },
-//   cdr: { 
-//     type: FLOAT, 
-//   },
-//   cdrNext: { 
-//     type: FLOAT, 
-//   },
-//   currFace: { 
-//     type: FLOAT, 
-//   }     
-// },{ timestamps: false });
+const OFinCMO = db.define('ofincmo', {
+    cusip: { 
+        type: STRING, 
+      },
+      faceincmo: { 
+        type: FLOAT, 
+      },
+      month: { 
+        type: STRING, 
+      }    
+},{ timestamps: false });
 
-// module.exports = CMOBody;
+module.exports = OFinCMO;
 
 
-// this works fine but is called every time, probably needs to be told not to do it if table
-// exisits don't need it no but could be useful later  
+// that should work 
 // const OFinCMO = db.query(`
-//     CREATE TABLE "Continent"(
+//     CREATE TABLE IF NOT EXISTS  "Continent"(
 //         id INTEGER PRIMARY KEY,
 //         name VARCHAR(100) NOT NULL
 //     );

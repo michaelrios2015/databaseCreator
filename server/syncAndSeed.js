@@ -27,6 +27,11 @@ const {
     } = require('./synchAndSeedHelpers/platinums.js');
 
 
+const {
+    streamAndPipe
+} = require('./synchAndSeedHelpers/allmostallcmos.js')   
+
+
   // this is for the table I have not tackled yet 
   let streamCPN = fs.createReadStream('data/cpn.csv');
   let csvDataCPN = [];
@@ -91,6 +96,10 @@ const {
     // platinumStreamer('data/platinums/platmonPPS_202105.csv')
     // platinumBodyStreamer('data/platinums/platmonPPS_202105.csv', 'MAY')
     // collateralStreamer('data/platinums/platcoll_202105.csv', 'MAY');
+
+    // ------------------------allmost all cmos -----------------
+    // streamAndPipe();
+
   };
 
   
