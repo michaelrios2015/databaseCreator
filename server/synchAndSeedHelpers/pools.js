@@ -111,42 +111,45 @@ async function poolStreamer(csv) {
 
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  let streamPoolsPrediction = fs.createReadStream('data/pools/ginnie_202106_monthly_predictions_roll.csv') 
-  let csvPoolPrediction = [];
-  let csvStreamPoolsPredication = fastcsv
-  .parse()
-  .on("data", function(data) {
-    // console.log('here')
-    csvPoolPrediction.push(data);
-  })
-  .on("end", async function() {
-    for (let i = 1; i < csvPoolPrediction.length; i++ ){
-    // for (let i = 1; i < 10; i++ ){    
+  const poolPredictionStreamer = async(csv, month) => {
+    let streamPoolsPrediction = fs.createReadStream(csv) 
+    let csvPoolPrediction = [];
+    let csvStreamPoolsPredication = fastcsv
+    .parse()
+    .on("data", function(data) {
+      // console.log('here')
+      csvPoolPrediction.push(data);
+    })
+    .on("end", async function() {
+      for (let i = 1; i < csvPoolPrediction.length; i++ ){
+      // for (let i = 1; i < 10; i++ ){    
 
-    // so need to search throug poolbodies for cusip and month get the id and use that to set the poolprediction ID all non connected ones will be lost 
+      // so need to search throug poolbodies for cusip and month get the id and use that to set the poolprediction ID all non connected ones will be lost 
 
 
-        try {
+          try {
 
-          // let poolBody = await PoolBody.findOne({ where: {poolCusip: csvPoolPrediction[i][0], month: "APRIL"}})
-          // if (poolBody){
+            // let poolBody = await PoolBody.findOne({ where: {poolCusip: csvPoolPrediction[i][0], month: "APRIL"}})
+            // if (poolBody){
 
-              // await PoolPrediction.create({ cusip: csvPoolPrediction[i][0], totalOutstanding: csvPoolPrediction[i][1], vpr: csvPoolPrediction[i][2], vprNext: csvPoolPrediction[i][3], 
-              // cdr: csvPoolPrediction[i][4], cdrNext: csvPoolPrediction[i][5], cpr: csvPoolPrediction[i][6], cprNext: csvPoolPrediction[i][7], poolbodyId: poolBody.id})
+                // await PoolPrediction.create({ cusip: csvPoolPrediction[i][0], totalOutstanding: csvPoolPrediction[i][1], vpr: csvPoolPrediction[i][2], vprNext: csvPoolPrediction[i][3], 
+                // cdr: csvPoolPrediction[i][4], cdrNext: csvPoolPrediction[i][5], cpr: csvPoolPrediction[i][6], cprNext: csvPoolPrediction[i][7], poolbodyId: poolBody.id})
 
-              await PoolPrediction.create({ cusip: csvPoolPrediction[i][0], totalOutstanding: csvPoolPrediction[i][1], vpr: csvPoolPrediction[i][2], vprNext: csvPoolPrediction[i][3], 
-                cdr: csvPoolPrediction[i][4], cdrNext: csvPoolPrediction[i][5], cpr: csvPoolPrediction[i][6], cprNext: csvPoolPrediction[i][7], month: 'MAY'})
-          // }
-          }
-            catch(ex){
-              console.log(ex)
+                await PoolPrediction.create({ cusip: csvPoolPrediction[i][0], totalOutstanding: csvPoolPrediction[i][1], vpr: csvPoolPrediction[i][2], vprNext: csvPoolPrediction[i][3], 
+                  cdr: csvPoolPrediction[i][4], cdrNext: csvPoolPrediction[i][5], cpr: csvPoolPrediction[i][6], cprNext: csvPoolPrediction[i][7], month: month})
+            // }
             }
+              catch(ex){
+                console.log(ex)
+              }
 
 
-      }
+        }
 
-    });
+      });
 
+      await streamPoolsPrediction.pipe(csvStreamPoolsPredication);
+  }  
 
     
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -193,8 +196,7 @@ async function poolStreamer(csv) {
 module.exports = {
   poolStreamer,
   poolBodyStreamer,
-  streamPoolsPrediction,
-  csvStreamPoolsPredication,
+  poolPredictionStreamer,
   streamPoolsFHAVA,
   csvStreamPoolsFHAVA
 };

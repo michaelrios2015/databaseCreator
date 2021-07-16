@@ -14,8 +14,7 @@ const {
 const {
   poolStreamer,
   poolBodyStreamer,
-  streamPoolsPrediction,
-  csvStreamPoolsPredication,
+  poolPredictionStreamer,
   streamPoolsFHAVA,
   csvStreamPoolsFHAVA
         } = require('./synchAndSeedHelpers/pools.js');
@@ -87,7 +86,9 @@ const {
     // poolBodyStreamer('data/pools/monthlySFPS_202104.csv', 'APRIL')
     // poolBodyStreamer('data/pools/monthlySFPS_202105.csv', 'MAY');
     
-    // streamPoolsPrediction.pipe(csvStreamPoolsPredication)
+    // poolPredictionStreamer('data/pools/ginnie_202106_monthly_predictions_roll.csv', 'MAY')
+    // poolPredictionStreamer('data/pools/ginnie_202107_monthly_predictions_roll.csv', 'JUNE')
+    
     // streamPoolsFHAVA.pipe(csvStreamPoolsFHAVA)
 
 

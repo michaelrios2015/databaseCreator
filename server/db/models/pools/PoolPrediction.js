@@ -31,6 +31,7 @@ const PoolPrediction = db.define('poolpredictions', {
   },
   month: { 
     type: STRING, 
+    primaryKey: true 
   }       
 },{ timestamps: false });
 
