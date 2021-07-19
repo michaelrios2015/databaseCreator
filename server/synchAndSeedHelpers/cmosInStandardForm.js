@@ -93,7 +93,7 @@ const streamAndPipeCMOData = (csv, month) =>{
     streamData.pipe(csvStream);
 }
 
-// Needs to be redone to be a function that takes in csv and month 
+// Needs to be redone to be a function that takes in csv and month  the basics are working have not yet put it the database
 //-----------------------------MONTH UPDATE MONTH UPDATE MONTH UPDATE------------------------------------------- 
 // if a cobody already exisits seems to update residual and actual, if a cmbody does not exisits creates one but with only actual CPR
 
