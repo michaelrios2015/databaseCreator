@@ -11,6 +11,11 @@ const {
   streamAprilUpdateandPipe
       } = require('./synchAndSeedHelpers/months.js');
 
+const  {
+  streamAndPipeCMOData,
+  streamAndPipeCMODataUpdate
+} = require('./synchAndSeedHelpers/cmosInStandardForm.js');
+
 const {
   poolStreamer,
   poolBodyStreamer,
@@ -75,6 +80,9 @@ const {
     // streamAprilandPipe();
     // streamAprilUpdateandPipe();
 
+    // streamAndPipeCMOData('data/cmos/mayData.csv', 'MAY');
+    streamAndPipeCMODataUpdate('data/cmos/mayUpdateData.csv', 'MAY')
+    
     // -----------Not using yet--------------
     // streamCPN.pipe(csvStreamCPN);
 
