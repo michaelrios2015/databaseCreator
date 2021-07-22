@@ -10,6 +10,7 @@ const PoolFHAVA = require("./models/pools/PoolFHAVA");
 const Platinum = require("./models/platinums/Platinum");
 const PlatinumBody = require("./models/platinums/PlatinumBody");
 const Collateral = require("./models/platinums/Collateral");
+const FedHolding = require("./models/FedHolding");
 
 
 CMOHeader.hasMany(CMOBody);
@@ -36,6 +37,7 @@ module.exports = {
 		Platinum,
 		PlatinumBody,
 		Collateral,
-		OFinCMO
+		OFinCMO,
+		FedHolding
 	},
 };

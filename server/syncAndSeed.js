@@ -35,6 +35,9 @@ const {
     streamAndPipe
 } = require('./synchAndSeedHelpers/allmostallcmos.js')   
 
+const {
+    streamAndPipeFedHoldings
+} = require('./synchAndSeedHelpers/fedholdings.js')
 
   // this is for the table I have not tackled yet 
   let streamCPN = fs.createReadStream('data/cpn.csv');
@@ -81,7 +84,7 @@ const {
     // streamAprilUpdateandPipe();
 
     // streamAndPipeCMOData('data/cmos/mayData.csv', 'MAY');
-    streamAndPipeCMODataUpdate('data/cmos/mayUpdateData.csv', 'MAY')
+    // streamAndPipeCMODataUpdate('data/cmos/mayUpdateData.csv', 'MAY')
     
     // -----------Not using yet--------------
     // streamCPN.pipe(csvStreamCPN);
@@ -93,6 +96,7 @@ const {
 
     // poolBodyStreamer('data/pools/monthlySFPS_202104.csv', 'APRIL')
     // poolBodyStreamer('data/pools/monthlySFPS_202105.csv', 'MAY');
+    // poolBodyStreamer('data/pools/monthlySFPS_202106.csv', 'JUNE');
     
     // poolPredictionStreamer('data/pools/ginnie_202106_monthly_predictions_roll.csv', 'MAY')
     // poolPredictionStreamer('data/pools/ginnie_202107_monthly_predictions_roll.csv', 'JUNE')
@@ -108,6 +112,9 @@ const {
 
     // ------------------------allmost all cmos -----------------
     // streamAndPipe();
+
+    // ------------------------ FED HOLDINGS -----------------
+    // streamAndPipeFedHoldings();
 
   };
 
