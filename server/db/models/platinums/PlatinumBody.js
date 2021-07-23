@@ -6,6 +6,7 @@ const { INTEGER, STRING, FLOAT } = Sequelize;
 const PlatinumBody = db.define('platinumbodies', {
   cusip: { 
     type: STRING, 
+    primaryKey: true  
   },
   interestrate: { 
     type: FLOAT, 
@@ -27,6 +28,7 @@ const PlatinumBody = db.define('platinumbodies', {
   },
   month: { 
     type: STRING, 
+    primaryKey: true  
   }      
 },{ timestamps: false });
 

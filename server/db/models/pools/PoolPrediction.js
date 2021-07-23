@@ -6,7 +6,7 @@ const { INTEGER, STRING, FLOAT } = Sequelize;
 const PoolPrediction = db.define('poolpredictions', {
   cusip: { 
     type: STRING,
-    primaryKey: true  
+    // primaryKey: true  
   },
   totalOutstanding: { 
     type: FLOAT, 
@@ -31,7 +31,7 @@ const PoolPrediction = db.define('poolpredictions', {
   },
   month: { 
     type: STRING, 
-    primaryKey: true 
+    // primaryKey: true 
   }       
 },{ timestamps: false });
 

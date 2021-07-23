@@ -5,7 +5,8 @@ const { INTEGER, STRING, FLOAT } = Sequelize;
 
 const PoolBody = db.define('poolbodies', {
   cusip: { 
-    type: STRING, 
+    type: STRING,
+    // primaryKey: true  
   },
   interestRate: { 
     type: FLOAT, 
@@ -26,7 +27,8 @@ const PoolBody = db.define('poolbodies', {
     type: INTEGER, 
   },
   month: { 
-    type: STRING, 
+    type: STRING,
+    // primaryKey: true 
   }      
 },{ timestamps: false });
 

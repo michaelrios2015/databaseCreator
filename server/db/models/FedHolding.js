@@ -8,6 +8,7 @@ const { INTEGER, STRING, FLOAT, DATEONLY, BOOLEAN } = Sequelize;
 const FedHolding = db.define('fedholdings', {
   asofdate: {
     type: DATEONLY,
+    primaryKey: true
   },
   cusip: { 
     type: STRING,

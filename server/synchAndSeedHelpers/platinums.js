@@ -119,18 +119,21 @@ async function collateralStreamer(csv, month) {
   })
   .on("end", async function() {
     for (let i = 0; i < csvMonthCollateral.length; i++ ){
-    // for (let i = 0; i < 1000; i++ ){
-
+    // for (let i = 0; i < 10; i++ ){
+      // console.log(csvMonthCollateral[i])
       const cusip = csvMonthCollateral[i][0].slice(0, 9);
       const poolname = csvMonthCollateral[i][0].slice(19, 25);
       const faceinplatinum = csvMonthCollateral[i][0].slice(53, 68);
+      const active = csvMonthCollateral[i][0].slice(79, 80);
 
       // console.log(cusip);
       // console.log(poolname);
       // console.log(faceinplatinum);
+      // console.log(active);
+      
 
       try {
-      await Collateral.create({ cusip, poolname, faceinplatinum, month })
+      await Collateral.create({ cusip, poolname, faceinplatinum, active, month })
       }
       catch(ex){
         console.log(ex)

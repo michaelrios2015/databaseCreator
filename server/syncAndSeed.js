@@ -77,6 +77,8 @@ const {
     // await db.sync();
 
     // -----------Building cmos one csv file at a time--------------
+    // only sequilize generic primary key so need to be carful
+
     // streamFebandPipe();
     // streamMarchandPipe();
     // streamMarchUpdateandPipe();
@@ -91,8 +93,14 @@ const {
 
     // -----------Building Pools one csv file at a time--------------
     
+    // So this seems to work fine with just the cusip as primary key
+
     // poolStreamer('data/pools/monthlySFPS_202104.csv')
     // poolStreamer('data/pools/monthlySFPS_202105.csv')
+    // poolStreamer('data/pools/monthlySFPS_202106.csv')
+
+    // these need a composite primary key and it does not seem to work
+    //  hanging problem so they just have to be loaded in carefully 
 
     // poolBodyStreamer('data/pools/monthlySFPS_202104.csv', 'APRIL')
     // poolBodyStreamer('data/pools/monthlySFPS_202105.csv', 'MAY');
@@ -105,15 +113,28 @@ const {
 
 
     // -----------Building Platinums one csv file at a time--------------
+    // for the moment these seem to be small enough data sets to all for 
+    // compsoite primary key to work
 
     // platinumStreamer('data/platinums/platmonPPS_202105.csv')
+    // platinumStreamer('data/platinums/platmonPPS_202106.csv')
+
     // platinumBodyStreamer('data/platinums/platmonPPS_202105.csv', 'MAY')
+    // platinumBodyStreamer('data/platinums/platmonPPS_202106.csv', 'JUNE');
+    
+    // don't fully understand if this has a primary key
+
     // collateralStreamer('data/platinums/platcoll_202105.csv', 'MAY');
 
     // ------------------------allmost all cmos -----------------
+    // don't fully understand if this has a primary key
+
     // streamAndPipe();
 
     // ------------------------ FED HOLDINGS -----------------
+    // for the moment these seem to be small enough data sets to all for 
+    // compsoite primary key to work
+
     // streamAndPipeFedHoldings();
 
   };

@@ -1,6 +1,6 @@
 const db = require('../../db')
 const Sequelize = require('sequelize');
-const { INTEGER, STRING, FLOAT } = Sequelize;
+const { INTEGER, STRING, FLOAT, BOOLEAN } = Sequelize;
 
 
 const Collateral = db.define('collaterals', {
@@ -12,6 +12,9 @@ const Collateral = db.define('collaterals', {
   },
   faceinplatinum: { 
     type: FLOAT, 
+  },
+  active: {
+    type: STRING
   },
   month: {
     type: STRING

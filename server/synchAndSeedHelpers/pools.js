@@ -3,6 +3,24 @@ const { models: { Pool, PoolBody, PoolPrediction, PoolFHAVA } } = require('../db
 const fs = require("fs");
 const fastcsv = require("fast-csv");
 
+// This is essentially going into the pool streamer
+
+// let start = Moment(this.getDataValue('issueDate'), "YYYYMMDD");
+// let end = Moment(this.getDataValue('maturityDate'), "YYYYMMDD");
+// // console.log(start);
+// // console.log(end);
+
+// const months = end.diff(start, 'months');
+// // console.log(months);
+// if (this.getDataValue('originalFace') >= 250000 && 
+//     this.getDataValue('type') === 'SF' &&
+//     (this.getDataValue('indicator') === 'X' || this.getDataValue('indicator') === 'M') &&
+//     months  >= 336 ){
+//       return true
+// }
+// else {
+//   return false
+// }
 
 // a function to stream non changing data by month
 async function poolStreamer(csv) {
