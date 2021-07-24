@@ -1,27 +1,31 @@
 // this desperateley need to be seperated 
-const { models: { Pool, PoolBody, PoolPrediction, PoolFHAVA } } = require('../db');
+const { db, models: { Pool, PoolBody, PoolPrediction, PoolFHAVA } } = require('../db');
+const Moment = require('moment');
 const fs = require("fs");
 const fastcsv = require("fast-csv");
 
 // This is essentially going into the pool streamer
+const isTBAelig = (issueDate, maturityDate, originalFace, type, indicator) => {
+  
+  let start = Moment(issueDate, "YYYYMMDD");
+  let end = Moment(maturityDate, "YYYYMMDD");
+  // console.log(start);
+  // console.log(end);
 
-// let start = Moment(this.getDataValue('issueDate'), "YYYYMMDD");
-// let end = Moment(this.getDataValue('maturityDate'), "YYYYMMDD");
-// // console.log(start);
-// // console.log(end);
+  // checking the number of months from issue to maturity
+  const months = end.diff(start, 'months');
+  // console.log(months);
+  if (originalFace >= 250000 && 
+      type === 'SF' &&
+      (indicator === 'X' || indicator === 'M') &&
+      months  >= 336 ){
+        return true
+  }
+  else {
+    return false
+  }
 
-// const months = end.diff(start, 'months');
-// // console.log(months);
-// if (this.getDataValue('originalFace') >= 250000 && 
-//     this.getDataValue('type') === 'SF' &&
-//     (this.getDataValue('indicator') === 'X' || this.getDataValue('indicator') === 'M') &&
-//     months  >= 336 ){
-//       return true
-// }
-// else {
-//   return false
-// }
-
+}
 // a function to stream non changing data by month
 async function poolStreamer(csv) {
 
@@ -37,19 +41,32 @@ async function poolStreamer(csv) {
   })
   .on("end", async function() {
     for (let i = 0; i < csvMonthPools.length; i++ ){
-    // for (let i = 0; i < 10; i++ ){    
+    // for (let i = 0; i < 3; i++ ){    
       // console.log("------------------------------------");
       // console.log(i);
       // console.log(csvPools[i][0]);
       if (csvMonthPools[i][0] === 'PS' ){
         // console.log("------------------------------------");
-        // console.log(csvPools[i]);
-        let pool = await Pool.findByPk(csvMonthPools[i][1])
+        const cusip  = csvMonthPools[i][1];
+        const name = csvMonthPools[i][2];
+        const indicator = csvMonthPools[i][3];
+        const type = csvMonthPools[i][4];
+        const issuedate = csvMonthPools[i][5];
+        const maturitydate = csvMonthPools[i][7];
+        const originalface = csvMonthPools[i][8];
 
-        if(!pool){
+        // console.log(csvMonthPools[i][5]);
+        // console.log(csvMonthPools[i][7]);
+        
+        const istbaelig = isTBAelig(issuedate, maturitydate, originalface, type, indicator)
+        let [pool, _] = (await db.query(`SELECT cusip FROM pools where cusip = '${cusip}';`));
+        // console.log(pool[0]);
+        // let pool = await Pool.findByPk(cusip)
+
+        if(!pool[0]){
+        // console.log('no pool')
           try {
-          await Pool.create({ cusip: csvMonthPools[i][1], name: csvMonthPools[i][2], indicator: csvMonthPools[i][3], type: csvMonthPools[i][4], 
-              issueDate: csvMonthPools[i][5], maturityDate: csvMonthPools[i][7], originalFace: csvMonthPools[i][8]})
+          await Pool.create({ cusip, name, indicator, type, issuedate, maturitydate, originalface, istbaelig })
           }
           catch(ex){
             console.log(ex)

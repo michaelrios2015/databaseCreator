@@ -3,7 +3,7 @@ const fs = require("fs");
 const fastcsv = require("fast-csv");
 
 
-let stream = fs.createReadStream('data/FedHoldings20210714.csv');  
+let stream = fs.createReadStream('data/fedHoldings/FedHoldings20210714.csv');  
 let csvData = [];
 let csvStream = fastcsv
 .parse()

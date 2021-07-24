@@ -1,6 +1,7 @@
 const db = require('../../db')
 const Sequelize = require('sequelize');
 const Moment = require('moment');
+const { BOOLEAN } = require('sequelize');
 const { INTEGER, STRING, FLOAT, VIRTUAL } = Sequelize;
 
 
@@ -18,36 +19,17 @@ const Pool = db.define('pools', {
   type: { 
     type: STRING, 
   },
-  issueDate: { 
+  issuedate: { 
     type: INTEGER, 
   },
-  maturityDate: { 
+  maturitydate: { 
     type: INTEGER, 
   },
-  originalFace: { 
+  originalface: { 
     type: FLOAT, 
   },
-  isTBAElig : { 
-    type: VIRTUAL,
-    get () 
-    {
-      let start = Moment(this.getDataValue('issueDate'), "YYYYMMDD");
-      let end = Moment(this.getDataValue('maturityDate'), "YYYYMMDD");
-      // console.log(start);
-      // console.log(end);
-      
-      const months = end.diff(start, 'months');
-      // console.log(months);
-      if (this.getDataValue('originalFace') >= 250000 && 
-          this.getDataValue('type') === 'SF' &&
-          (this.getDataValue('indicator') === 'X' || this.getDataValue('indicator') === 'M') &&
-          months  >= 336 ){
-            return true
-    }
-      else {
-        return false
-      }
-    } 
+  istbaelig : { 
+    type: BOOLEAN, 
   }      
 },{ timestamps: false });
 
