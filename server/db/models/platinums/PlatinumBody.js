@@ -1,6 +1,6 @@
 const db = require('../../db')
 const Sequelize = require('sequelize');
-const { INTEGER, STRING, FLOAT } = Sequelize;
+const { INTEGER, STRING, FLOAT, DATEONLY } = Sequelize;
 
 
 const PlatinumBody = db.define('platinumbodies', {
@@ -26,7 +26,7 @@ const PlatinumBody = db.define('platinumbodies', {
   wala: { 
     type: INTEGER, 
   },
-  month: { 
+  date: { 
     type: STRING, 
     primaryKey: true  
   }      

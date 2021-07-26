@@ -26,9 +26,9 @@ async function platinumStreamer(csv) {
       if (csvMonthPlatinums[i][0] === 'PS' ){
         // console.log("------------------------------------");
         // console.log(csvPools[i]);
-        let platinum = await Platinum.findByPk(csvMonthPlatinums[i][1])
+        // let platinum = await Platinum.findByPk(csvMonthPlatinums[i][1])
 
-        if(!platinum){
+        // if(!platinum){
           try {
           await Platinum.create({ cusip: csvMonthPlatinums[i][1], name: csvMonthPlatinums[i][2], indicator: csvMonthPlatinums[i][3], type: csvMonthPlatinums[i][4], 
               issueDate: csvMonthPlatinums[i][5], maturityDate: csvMonthPlatinums[i][7], originalFace: csvMonthPlatinums[i][8]})
@@ -36,7 +36,7 @@ async function platinumStreamer(csv) {
           catch(ex){
             console.log(ex)
           }
-        }  
+        // }  
       }
     }
   });
@@ -52,7 +52,7 @@ async function platinumStreamer(csv) {
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // this adds the changing monthly data 
 
-const platinumBodyStreamer = async(csv, month) => {
+const platinumBodyStreamer = async(csv, date) => {
   let streamMonthPlatinumBodies = fs.createReadStream(csv)
   let csvPlatinumMonthBodies = [];
   let csvStreamMonthPlatinumBodies = fastcsv
@@ -92,7 +92,7 @@ const platinumBodyStreamer = async(csv, month) => {
 
         try {
           await PlatinumBody.create({ cusip: csvPlatinumMonthBodies[i][1], interestrate: csvPlatinumMonthBodies[i][6], remainingbalance: csvPlatinumMonthBodies[i][9], 
-          factor: csvPlatinumMonthBodies[i][10], gwac: csvPlatinumMonthBodies[i][16], wam: csvPlatinumMonthBodies[i][17], wala: csvPlatinumMonthBodies[i][18], month: month})
+          factor: csvPlatinumMonthBodies[i][10], gwac: csvPlatinumMonthBodies[i][16], wam: csvPlatinumMonthBodies[i][17], wala: csvPlatinumMonthBodies[i][18], date})
         }
           catch(ex){
           console.log(ex)

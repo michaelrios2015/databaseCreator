@@ -20,8 +20,7 @@ const {
   poolStreamer,
   poolBodyStreamer,
   poolPredictionStreamer,
-  streamPoolsFHAVA,
-  csvStreamPoolsFHAVA
+  poolFHAVAStreamer
         } = require('./synchAndSeedHelpers/pools.js');
 
 const {
@@ -95,21 +94,21 @@ const {
     
     // So this seems to work fine with just the cusip as primary key
 
-    // poolStreamer('data/pools/monthlySFPS_202104.csv')
     // poolStreamer('data/pools/monthlySFPS_202105.csv')
     // poolStreamer('data/pools/monthlySFPS_202106.csv')
 
     // these need a composite primary key and it does not seem to work
     //  hanging problem so they just have to be loaded in carefully 
 
-    // poolBodyStreamer('data/pools/monthlySFPS_202104.csv', 'APRIL')
-    // poolBodyStreamer('data/pools/monthlySFPS_202105.csv', 'MAY');
-    // poolBodyStreamer('data/pools/monthlySFPS_202106.csv', 'JUNE');
+    // poolBodyStreamer('data/pools/monthlySFPS_202105.csv', '2021-05');
+    // poolBodyStreamer('data/pools/monthlySFPS_202106.csv', '2021-06');
     
-    // poolPredictionStreamer('data/pools/ginnie_202106_monthly_predictions_roll.csv', 'MAY')
-    // poolPredictionStreamer('data/pools/ginnie_202107_monthly_predictions_roll.csv', 'JUNE')
+    // poolPredictionStreamer('data/pools/ginnie_202106_monthly_predictions_roll.csv', '2021-06')
+    // poolPredictionStreamer('data/pools/ginnie_202107_monthly_predictions_roll.csv', '2021-07')
     
-    // streamPoolsFHAVA.pipe(csvStreamPoolsFHAVA)
+
+    // poolFHAVAStreamer('data/pools/FHAVATest_20210615.csv', '2021-06');
+    // poolFHAVAStreamer('data/pools/FHAVATest_20210715.csv', '2021-07');
 
 
     // -----------Building Platinums one csv file at a time--------------
@@ -119,8 +118,8 @@ const {
     // platinumStreamer('data/platinums/platmonPPS_202105.csv')
     // platinumStreamer('data/platinums/platmonPPS_202106.csv')
 
-    // platinumBodyStreamer('data/platinums/platmonPPS_202105.csv', 'MAY')
-    // platinumBodyStreamer('data/platinums/platmonPPS_202106.csv', 'JUNE');
+    // platinumBodyStreamer('data/platinums/platmonPPS_202105.csv', '2021-05')
+    // platinumBodyStreamer('data/platinums/platmonPPS_202106.csv', '2021-06');
     
     // don't fully understand if this has a primary key
 

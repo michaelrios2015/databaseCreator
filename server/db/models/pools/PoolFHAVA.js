@@ -6,7 +6,7 @@ const { INTEGER, STRING, FLOAT } = Sequelize;
 const PoolFHAVA = db.define('poolfhavas', {
   cusip: { 
     type: STRING,
-    // primaryKey: true  
+    primaryKey: true  
   },
   fha: { 
     type: FLOAT, 
@@ -20,9 +20,9 @@ const PoolFHAVA = db.define('poolfhavas', {
   indian: { 
     type: FLOAT, 
   },
-  month: { 
+  date: { 
     type: STRING,
-    // primaryKey: true 
+    primaryKey: true 
   }       
 },{ timestamps: false });
 

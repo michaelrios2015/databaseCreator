@@ -89,7 +89,7 @@ async function poolStreamer(csv) {
   
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  const poolBodyStreamer = async(csv, month) => {
+  const poolBodyStreamer = async(csv, date) => {
     let streamMonthPoolBodies = fs.createReadStream(csv)
     let csvPoolMonthBodies = [];
     let csvStreamMonthPoolBodies = fastcsv
@@ -129,7 +129,7 @@ async function poolStreamer(csv) {
 
           try {
             await PoolBody.create({ cusip: csvPoolMonthBodies[i][1], interestRate: csvPoolMonthBodies[i][6], remainingBalance: csvPoolMonthBodies[i][9], 
-            factor: csvPoolMonthBodies[i][10], GWAC: csvPoolMonthBodies[i][17], WAM: csvPoolMonthBodies[i][18], WALA: csvPoolMonthBodies[i][19], month: month})
+            factor: csvPoolMonthBodies[i][10], GWAC: csvPoolMonthBodies[i][17], WAM: csvPoolMonthBodies[i][18], WALA: csvPoolMonthBodies[i][19], date})
           }
             catch(ex){
             console.log(ex)
@@ -146,7 +146,7 @@ async function poolStreamer(csv) {
 
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  const poolPredictionStreamer = async(csv, month) => {
+  const poolPredictionStreamer = async(csv, date) => {
     let streamPoolsPrediction = fs.createReadStream(csv) 
     let csvPoolPrediction = [];
     let csvStreamPoolsPredication = fastcsv
@@ -171,7 +171,7 @@ async function poolStreamer(csv) {
                 // cdr: csvPoolPrediction[i][4], cdrNext: csvPoolPrediction[i][5], cpr: csvPoolPrediction[i][6], cprNext: csvPoolPrediction[i][7], poolbodyId: poolBody.id})
 
                 await PoolPrediction.create({ cusip: csvPoolPrediction[i][0], totalOutstanding: csvPoolPrediction[i][1], vpr: csvPoolPrediction[i][2], vprNext: csvPoolPrediction[i][3], 
-                  cdr: csvPoolPrediction[i][4], cdrNext: csvPoolPrediction[i][5], cpr: csvPoolPrediction[i][6], cprNext: csvPoolPrediction[i][7], month: month})
+                  cdr: csvPoolPrediction[i][4], cdrNext: csvPoolPrediction[i][5], cpr: csvPoolPrediction[i][6], cprNext: csvPoolPrediction[i][7], date})
             // }
             }
               catch(ex){
@@ -188,8 +188,8 @@ async function poolStreamer(csv) {
 
     
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-    let streamPoolsFHAVA = fs.createReadStream('data/pools/FHAVATest_20210615.csv') 
+const poolFHAVAStreamer = async(csv, date) => {
+    let streamPoolsFHAVA = fs.createReadStream(csv) 
     let csvPoolFHAVA = [];
     let csvStreamPoolsFHAVA = fastcsv
     .parse()
@@ -213,7 +213,7 @@ async function poolStreamer(csv) {
                 // cdr: csvPoolPrediction[i][4], cdrNext: csvPoolPrediction[i][5], cpr: csvPoolPrediction[i][6], cprNext: csvPoolPrediction[i][7], poolbodyId: poolBody.id})
   
                 await PoolFHAVA.create({ cusip: csvPoolFHAVA[i][0], fha: csvPoolFHAVA[i][1], va: csvPoolFHAVA[i][2], rural: csvPoolFHAVA[i][3], 
-                  indian: csvPoolFHAVA[i][4], month: 'MAY' })
+                  indian: csvPoolFHAVA[i][4], date })
             // }
             }
               catch(ex){
@@ -225,6 +225,8 @@ async function poolStreamer(csv) {
   
       });
 
+      await streamPoolsFHAVA.pipe(csvStreamPoolsFHAVA);
+    }
 
 // CUSIP,total_outstanding,VPR,VPR_next,CDR,CDR_next,CPR,CPR_next
   
@@ -232,6 +234,5 @@ module.exports = {
   poolStreamer,
   poolBodyStreamer,
   poolPredictionStreamer,
-  streamPoolsFHAVA,
-  csvStreamPoolsFHAVA
+  poolFHAVAStreamer
 };
