@@ -1,6 +1,6 @@
 const db = require('../../db')
 const Sequelize = require('sequelize');
-const { INTEGER, STRING, FLOAT } = Sequelize;
+const { INTEGER, STRING, FLOAT, BOOLEAN } = Sequelize;
 
 
 const Platinum = db.define('platinums', {
@@ -17,14 +17,17 @@ const Platinum = db.define('platinums', {
   type: { 
     type: STRING, 
   },
-  issueDate: { 
+  issuedate: { 
     type: INTEGER, 
   },
-  maturityDate: { 
+  maturitydate: { 
     type: INTEGER, 
   },
-  originalFace: { 
+  originalface: { 
     type: FLOAT, 
+  },
+  istbaelig: {
+    type: BOOLEAN
   }      
 },{ timestamps: false });
 

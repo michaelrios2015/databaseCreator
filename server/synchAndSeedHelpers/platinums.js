@@ -1,5 +1,5 @@
 // this desperateley need to be seperated 
-const { models: { Platinum, PlatinumBody, Collateral } } = require('../db');
+const { models: { Platinum, PlatinumBody, Collateral, PlatIstbaelig } } = require('../db');
 const fs = require("fs");
 const fastcsv = require("fast-csv");
 
@@ -26,17 +26,17 @@ async function platinumStreamer(csv) {
       if (csvMonthPlatinums[i][0] === 'PS' ){
         // console.log("------------------------------------");
         // console.log(csvPools[i]);
-        // let platinum = await Platinum.findByPk(csvMonthPlatinums[i][1])
+        let platinum = await Platinum.findByPk(csvMonthPlatinums[i][1])
 
-        // if(!platinum){
+        if(!platinum){
           try {
           await Platinum.create({ cusip: csvMonthPlatinums[i][1], name: csvMonthPlatinums[i][2], indicator: csvMonthPlatinums[i][3], type: csvMonthPlatinums[i][4], 
-              issueDate: csvMonthPlatinums[i][5], maturityDate: csvMonthPlatinums[i][7], originalFace: csvMonthPlatinums[i][8]})
+              issuedate: csvMonthPlatinums[i][5], maturitydate: csvMonthPlatinums[i][7], originalface: csvMonthPlatinums[i][8], istbaelig: false })
           }
           catch(ex){
             console.log(ex)
           }
-        // }  
+        }  
       }
     }
   });
@@ -48,6 +48,87 @@ async function platinumStreamer(csv) {
   await streamMonthPlatinums.pipe(csvStreamMonthPlatinums);
 }
 
+// ------------------------------------------------------------------------------------------------------------
+// We have checked the platinums to see if the pools are is tba eligible so now we need to update platimuns
+
+async function platinumUpdateStreamer(csv) {
+
+  let streamPlatinums = fs.createReadStream(csv)
+  let csvPlatinums = [];
+  let csvStreamPlatinums = fastcsv
+  .parse()
+  .on("data", function(data) {
+    // console.log('here')
+    csvPlatinums.push(data);
+  })
+  .on("end", async function() {
+    for (let i = 1; i < csvPlatinums.length; i++ ){
+    // for (let i = 0; i < 10; i++ ){    
+      console.log("------------------------------------");
+      console.log(csvPlatinums[i][7]);
+
+      let platinum = await Platinum.findByPk(csvPlatinums[i][0])
+      platinum.istbaelig = csvPlatinums[i][7]
+      await platinum.save()
+
+      // if(!platinum){
+      //   try {
+      //   await Platinum.create({ cusip: csvMonthPlatinums[i][1], name: csvMonthPlatinums[i][2], indicator: csvMonthPlatinums[i][3], type: csvMonthPlatinums[i][4], 
+      //       issuedate: csvMonthPlatinums[i][5], maturitydate: csvMonthPlatinums[i][7], originalface: csvMonthPlatinums[i][8], istbaelig: false })
+      //   }
+      //   catch(ex){
+      //     console.log(ex)
+      //   }
+      // }  
+    }
+  });
+
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  // console.log(streamMonthPools);
+  // await streamAprilData.pipe(csvAprilStream);
+  await streamPlatinums.pipe(csvStreamPlatinums);
+}
+
+
+// ------------------------------------------------------------------------------------------------------------
+// We have checked the platinums to see if the pools are is tba eligible so now we need to update platimuns
+
+async function platIstabaeligabletreamer(csv) {
+
+  let streamPlatinums = fs.createReadStream(csv)
+  let csvPlatinums = [];
+  let csvStreamPlatinums = fastcsv
+  .parse()
+  .on("data", function(data) {
+    // console.log('here')
+    csvPlatinums.push(data);
+  })
+  .on("end", async function() {
+    for (let i = 1; i < csvPlatinums.length; i++ ){
+    // for (let i = 0; i < 10; i++ ){    
+      // console.log("------------------------------------");
+      // console.log(csvPlatinums[i][7]);
+
+      // let platinum = await Platinum.findByPk(csvPlatinums[i][0])
+      // platinum.istbaelig = csvPlatinums[i][7]
+      // await platinum.save()
+
+      try {
+        await PlatIstbaelig.create({ cusip: csvPlatinums[i][0], istbaelig: csvPlatinums[i][7] })
+      }
+      catch(ex){
+        console.log(ex)
+      }
+    }
+  });
+
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  // console.log(streamMonthPools);
+  // await streamAprilData.pipe(csvAprilStream);
+  await streamPlatinums.pipe(csvStreamPlatinums);
+}
 
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // this adds the changing monthly data 
@@ -153,5 +234,7 @@ async function collateralStreamer(csv, month) {
 module.exports = {
   platinumStreamer,
   platinumBodyStreamer,
-  collateralStreamer
+  collateralStreamer,
+  platinumUpdateStreamer,
+  platIstabaeligabletreamer
 };
