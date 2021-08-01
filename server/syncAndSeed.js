@@ -26,7 +26,7 @@ const {
 const {
   platinumStreamer,
   platinumBodyStreamer,
-  collateralStreamer,
+  platCollStreamer,
   platinumUpdateStreamer,
   platIstabaeligabletreamer
     } = require('./synchAndSeedHelpers/platinums.js');
@@ -125,7 +125,7 @@ const {
     
     // don't fully understand if this has a primary key
 
-    // collateralStreamer('data/platinums/platcoll_202105.csv', 'MAY');
+    platCollStreamer('data/platinums/platcoll_202105.csv', 'MAY');
 
     // platinumUpdateStreamer('data/platinums/platinums_istbaelig_round_one.csv')
 
@@ -136,6 +136,7 @@ const {
     // ------------------------allmost all cmos -----------------
     // don't fully understand if this has a primary key
 
+    // probably messed something up by running this twice
     // streamAndPipe();
 
     // ------------------------ FED HOLDINGS -----------------

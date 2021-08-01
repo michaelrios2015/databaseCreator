@@ -1,13 +1,16 @@
 const db = require('../../db')
 const Sequelize = require('sequelize');
-const { INTEGER, STRING, FLOAT, BOOLEAN } = Sequelize;
+const { INTEGER, STRING, FLOAT, BOOLEAN, DATEONLY } = Sequelize;
 
 
-const Collateral = db.define('collaterals', {
+const PlatColl = db.define('plattcoll', {
   cusip: { 
     type: STRING, 
   },
   poolname: { 
+    type: STRING, 
+  },
+  indicator: { 
     type: STRING, 
   },
   faceinplatinum: { 
@@ -16,10 +19,13 @@ const Collateral = db.define('collaterals', {
   active: {
     type: STRING
   },
-  month: {
-    type: STRING
+  born: {
+    type: DATEONLY
+  },
+  terminated: {
+    type: DATEONLY
   }      
 },{ timestamps: false });
 
 
-module.exports = Collateral;
+module.exports = PlatColl;

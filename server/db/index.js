@@ -9,7 +9,7 @@ const PoolPrediction = require("./models/pools/PoolPrediction");
 const PoolFHAVA = require("./models/pools/PoolFHAVA");
 const Platinum = require("./models/platinums/Platinum");
 const PlatinumBody = require("./models/platinums/PlatinumBody");
-const Collateral = require("./models/platinums/Collateral");
+const PlatColl = require("./models/platinums/PlatColl");
 const PlatIstbaelig = require("./models/platinums/PlatIstbaelig")
 const FedHolding = require("./models/FedHolding");
 
@@ -38,7 +38,7 @@ module.exports = {
 		PoolFHAVA,
 		Platinum,
 		PlatinumBody,
-		Collateral,
+		PlatColl,
 		PlatIstbaelig,
 		OFinCMO,
 		FedHolding

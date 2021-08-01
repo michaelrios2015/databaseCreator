@@ -1,5 +1,5 @@
 // this desperateley need to be seperated 
-const { models: { Platinum, PlatinumBody, Collateral, PlatIstbaelig } } = require('../db');
+const { models: { Platinum, PlatinumBody, PlatColl, PlatIstbaelig } } = require('../db');
 const fs = require("fs");
 const fastcsv = require("fast-csv");
 
@@ -188,7 +188,7 @@ const platinumBodyStreamer = async(csv, date) => {
 // ------------------------------------------------------------------------------------------------
 // first attempt at dealing with the collaterals
 
-async function collateralStreamer(csv, month) {
+async function platCollStreamer(csv, month) {
 
   let streamMonthCollateral = fs.createReadStream(csv)
   let csvMonthCollateral = [];
@@ -199,26 +199,28 @@ async function collateralStreamer(csv, month) {
     csvMonthCollateral.push(data);
   })
   .on("end", async function() {
-    for (let i = 0; i < csvMonthCollateral.length; i++ ){
-    // for (let i = 0; i < 10; i++ ){
+    // for (let i = 0; i < csvMonthCollateral.length; i++ ){
+    for (let i = 0; i < 1; i++ ){
       // console.log(csvMonthCollateral[i])
       const cusip = csvMonthCollateral[i][0].slice(0, 9);
       const poolname = csvMonthCollateral[i][0].slice(19, 25);
+      const indicator = csvMonthCollateral[i][0].slice(25, 26);
       const faceinplatinum = csvMonthCollateral[i][0].slice(53, 68);
       const active = csvMonthCollateral[i][0].slice(79, 80);
 
-      // console.log(cusip);
-      // console.log(poolname);
-      // console.log(faceinplatinum);
-      // console.log(active);
+      console.log(cusip);
+      console.log(poolname);
+      console.log(indicator);
+      console.log(faceinplatinum);
+      console.log(active);
       
 
-      try {
-      await Collateral.create({ cusip, poolname, faceinplatinum, active, month })
-      }
-      catch(ex){
-        console.log(ex)
-      }
+      // try {
+      // await Collateral.create({ cusip, poolname, faceinplatinum, active, month })
+      // }
+      // catch(ex){
+      //   console.log(ex)
+      // }
     
     }
   });
@@ -234,7 +236,7 @@ async function collateralStreamer(csv, month) {
 module.exports = {
   platinumStreamer,
   platinumBodyStreamer,
-  collateralStreamer,
+  platCollStreamer,
   platinumUpdateStreamer,
   platIstabaeligabletreamer
 };
