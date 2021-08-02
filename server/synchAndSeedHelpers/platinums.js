@@ -1,5 +1,5 @@
 // this desperateley need to be seperated 
-const { models: { Platinum, PlatinumBody, PlatColl, PlatIstbaelig } } = require('../db');
+const { db, models: { Platinum, PlatinumBody, PlatColl, PlatIstbaelig } } = require('../db');
 const fs = require("fs");
 const fastcsv = require("fast-csv");
 
@@ -188,7 +188,7 @@ const platinumBodyStreamer = async(csv, date) => {
 // ------------------------------------------------------------------------------------------------
 // first attempt at dealing with the collaterals
 
-async function platCollStreamer(csv, month) {
+async function platCollStreamer(csv, date) {
 
   let streamMonthCollateral = fs.createReadStream(csv)
   let csvMonthCollateral = [];
@@ -199,29 +199,66 @@ async function platCollStreamer(csv, month) {
     csvMonthCollateral.push(data);
   })
   .on("end", async function() {
-    // for (let i = 0; i < csvMonthCollateral.length; i++ ){
-    for (let i = 0; i < 1; i++ ){
-      // console.log(csvMonthCollateral[i])
+    for (let i = 0; i < csvMonthCollateral.length; i++ ){
+    // for (let i = 0; i < 20; i++ ){
+      console.log(csvMonthCollateral[i])
       const cusip = csvMonthCollateral[i][0].slice(0, 9);
       const poolname = csvMonthCollateral[i][0].slice(19, 25);
       const indicator = csvMonthCollateral[i][0].slice(25, 26);
       const faceinplatinum = csvMonthCollateral[i][0].slice(53, 68);
       const active = csvMonthCollateral[i][0].slice(79, 80);
 
-      console.log(cusip);
-      console.log(poolname);
-      console.log(indicator);
-      console.log(faceinplatinum);
-      console.log(active);
-      
+      // console.log(cusip);
+      // console.log(poolname);
+      // console.log(indicator);
+      // console.log(faceinplatinum);
+      // console.log(active);
+      // console.log(date);
 
-      // try {
-      // await Collateral.create({ cusip, poolname, faceinplatinum, active, month })
-      // }
-      // catch(ex){
-      //   console.log(ex)
-      // }
-    
+      let [platcoll, _] = (await db.query(`SELECT cusip, active FROM platcolls WHERE cusip = '${cusip}' AND poolname = '${poolname}' AND indicator = '${indicator}';`));
+
+      // console.log(platcoll[0].active);
+      // console.log(platcoll);
+
+      //if the platcoll does not exist and it is already terminated, so we say it was born and terminted this month
+      if (!platcoll[0] && active === 'T'){
+        const born = date;
+        const terminated = date;
+        try {
+        await PlatColl.create({ cusip, poolname, indicator, faceinplatinum, active, born, terminated })
+        }
+        catch(ex){
+          console.log(ex)
+        }
+      }
+      //if the platcoll does not exist and it is still active
+      else if (!platcoll[0] && active === 'A'){
+        const born = date;
+        try {
+        await PlatColl.create({ cusip, poolname, indicator, faceinplatinum, active, born, terminated: null })
+        }
+        catch(ex){
+          console.log(ex)
+        }
+      }
+      // if the platcoll exists, it was active and is now terminated 
+      else if (active === 'T' && platcoll[0].active === 'A'){
+        const terminated = date;
+        try {
+          platcoll[0].active = active;
+          platcoll[0].terminated = terminated;
+          console.log('------------------------------');
+          console.log(platcoll[0]);
+          await db.query(`UPDATE platcolls SET active = '${active}', terminated = '${terminated}-01' WHERE cusip = '${cusip}' AND poolname = '${poolname}' AND indicator = '${indicator}';`);
+
+          // await platcoll.save()
+          // platinum.istbaelig = csvPlatinums[i][7]
+          // await platinum.save()
+        }
+        catch(ex){
+          console.log(ex)
+        }
+      }
     }
   });
 

@@ -125,7 +125,8 @@ const {
     
     // don't fully understand if this has a primary key
 
-    platCollStreamer('data/platinums/platcoll_202105.csv', 'MAY');
+    // platCollStreamer('data/platinums/platcoll_202105.csv', '2021-05');
+    // platCollStreamer('data/platinums/platcoll_202106.csv', '2021-06');
 
     // platinumUpdateStreamer('data/platinums/platinums_istbaelig_round_one.csv')
 

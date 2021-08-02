@@ -3,15 +3,18 @@ const Sequelize = require('sequelize');
 const { INTEGER, STRING, FLOAT, BOOLEAN, DATEONLY } = Sequelize;
 
 
-const PlatColl = db.define('plattcoll', {
+const PlatColl = db.define('platcoll', {
   cusip: { 
-    type: STRING, 
+    type: STRING,
+    primaryKey: true  
   },
   poolname: { 
-    type: STRING, 
+    type: STRING,
+    primaryKey: true  
   },
   indicator: { 
-    type: STRING, 
+    type: STRING,
+    primaryKey: true  
   },
   faceinplatinum: { 
     type: FLOAT, 
