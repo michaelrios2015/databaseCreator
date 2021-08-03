@@ -159,17 +159,7 @@ async function poolStreamer(csv) {
       for (let i = 1; i < csvPoolPrediction.length; i++ ){
       // for (let i = 1; i < 10; i++ ){    
 
-      // so need to search throug poolbodies for cusip and month get the id and use that to set the poolprediction ID all non connected ones will be lost 
-
-
           try {
-
-            // let poolBody = await PoolBody.findOne({ where: {poolCusip: csvPoolPrediction[i][0], month: "APRIL"}})
-            // if (poolBody){
-
-                // await PoolPrediction.create({ cusip: csvPoolPrediction[i][0], totalOutstanding: csvPoolPrediction[i][1], vpr: csvPoolPrediction[i][2], vprNext: csvPoolPrediction[i][3], 
-                // cdr: csvPoolPrediction[i][4], cdrNext: csvPoolPrediction[i][5], cpr: csvPoolPrediction[i][6], cprNext: csvPoolPrediction[i][7], poolbodyId: poolBody.id})
-
                 await PoolPrediction.create({ cusip: csvPoolPrediction[i][0], totalOutstanding: csvPoolPrediction[i][1], vpr: csvPoolPrediction[i][2], vprNext: csvPoolPrediction[i][3], 
                   cdr: csvPoolPrediction[i][4], cdrNext: csvPoolPrediction[i][5], cpr: csvPoolPrediction[i][6], cprNext: csvPoolPrediction[i][7], date})
             // }
@@ -205,12 +195,6 @@ const poolFHAVAStreamer = async(csv, date) => {
   
   
           try {
-  
-            // let poolBody = await PoolBody.findOne({ where: {poolCusip: csvPoolPrediction[i][0], month: "APRIL"}})
-            // if (poolBody){
-  
-                // await PoolPrediction.create({ cusip: csvPoolPrediction[i][0], totalOutstanding: csvPoolPrediction[i][1], vpr: csvPoolPrediction[i][2], vprNext: csvPoolPrediction[i][3], 
-                // cdr: csvPoolPrediction[i][4], cdrNext: csvPoolPrediction[i][5], cpr: csvPoolPrediction[i][6], cprNext: csvPoolPrediction[i][7], poolbodyId: poolBody.id})
   
                 await PoolFHAVA.create({ cusip: csvPoolFHAVA[i][0], fha: csvPoolFHAVA[i][1], va: csvPoolFHAVA[i][2], rural: csvPoolFHAVA[i][3], 
                   indian: csvPoolFHAVA[i][4], date })

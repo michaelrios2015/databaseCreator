@@ -1,18 +1,25 @@
 const db = require('../../db')
 const Sequelize = require('sequelize');
-const { STRING, FLOAT } = Sequelize;
+const { STRING, FLOAT, DATEONLY } = Sequelize;
 
 
 const OFinCMO = db.define('ofincmo', {
+    cmo: { 
+      type: STRING, 
+      // primaryKey: true 
+    },
     cusip: { 
-        type: STRING, 
-      },
-      faceincmo: { 
-        type: FLOAT, 
-      },
-      month: { 
-        type: STRING, 
-      }    
+      type: STRING,
+      // primaryKey: true  
+    },
+    faceincmo: { 
+        type: FLOAT,
+        // primaryKey: true  
+    },
+    date: { 
+        type: DATEONLY,
+        // primaryKey: true  
+    }    
 },{ timestamps: false });
 
 module.exports = OFinCMO;

@@ -2,8 +2,8 @@ const { models: { FedHolding } } = require('../db');
 const fs = require("fs");
 const fastcsv = require("fast-csv");
 
-
-let stream = fs.createReadStream('data/fedHoldings/FedHoldings20210714.csv');  
+const streamAndPipeFedHoldings = (cvs) => {
+let stream = fs.createReadStream(cvs);  
 let csvData = [];
 let csvStream = fastcsv
 .parse()
@@ -44,9 +44,7 @@ let csvStream = fastcsv
 }
 );
 
-
-const streamAndPipeFedHoldings = () => {
-  stream.pipe(csvStream); 
+stream.pipe(csvStream);
 }
 
 

@@ -33,7 +33,7 @@ const {
 
 
 const {
-    streamAndPipe
+  streamAndPipeOFinCMO
 } = require('./synchAndSeedHelpers/allmostallcmos.js')   
 
 const {
@@ -99,9 +99,6 @@ const {
     // poolStreamer('data/pools/monthlySFPS_202105.csv')
     // poolStreamer('data/pools/monthlySFPS_202106.csv')
 
-    // these need a composite primary key and it does not seem to work
-    //  hanging problem so they just have to be loaded in carefully 
-
     // poolBodyStreamer('data/pools/monthlySFPS_202105.csv', '2021-05');
     // poolBodyStreamer('data/pools/monthlySFPS_202106.csv', '2021-06');
     
@@ -114,8 +111,6 @@ const {
 
 
     // -----------Building Platinums one csv file at a time--------------
-    // for the moment these seem to be small enough data sets to all for 
-    // compsoite primary key to work
 
     // platinumStreamer('data/platinums/platmonPPS_202105.csv')
     // platinumStreamer('data/platinums/platmonPPS_202106.csv')
@@ -138,14 +133,13 @@ const {
     // don't fully understand if this has a primary key
 
     // probably messed something up by running this twice
-    // streamAndPipe();
+    streamAndPipeOFinCMO('data/cmos/allmostAllCMOs.csv', '2021-06');
 
     // ------------------------ FED HOLDINGS -----------------
-    // for the moment these seem to be small enough data sets to all for 
-    // compsoite primary key to work
 
-    // streamAndPipeFedHoldings();
 
+    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20210714.csv');
+    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20210721.csv');
   };
 
   

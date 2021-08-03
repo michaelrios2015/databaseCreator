@@ -1,6 +1,6 @@
 const db = require('../../db')
 const Sequelize = require('sequelize');
-const { INTEGER, STRING, FLOAT } = Sequelize;
+const { INTEGER, STRING, FLOAT, DATEONLY } = Sequelize;
 
 
 const PoolBody = db.define('poolbodies', {
@@ -27,7 +27,7 @@ const PoolBody = db.define('poolbodies', {
     type: INTEGER, 
   },
   date: { 
-    type: STRING,
+    type: DATEONLY,
     primaryKey: true 
   }      
 },{ timestamps: false });

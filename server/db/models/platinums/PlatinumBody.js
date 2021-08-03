@@ -27,7 +27,7 @@ const PlatinumBody = db.define('platinumbodies', {
     type: INTEGER, 
   },
   date: { 
-    type: STRING, 
+    type: DATEONLY, 
     primaryKey: true  
   }      
 },{ timestamps: false });

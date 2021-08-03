@@ -9,37 +9,43 @@ const fastcsv = require("fast-csv");
   // it would be better if thet=y are run order as the code could be made much shorter... 
   //------------------------------------FEB FEB  FEB-------------------------------------------------
   // so this gut is nice and easy becuase we have all the data
-let stream = fs.createReadStream('data/cmos/allmostAllCMOs.csv');  
-let csvData = [];
-let csvStream = fastcsv
-.parse()
-.on("data", function(data) {
-  csvData.push(data);
-})
-.on("end", async function() {
-  for (let i = 0; i < csvData.length; i++ ){
-    // for (let i = 0; i < 100; i++ ){
-    // console.log(csvData[i])
-       
-    try{
-     
-        await OFinCMO.create({ cusip: csvData[i][0], faceincmo: csvData[i][2], month: 'JUNE' })
+
+const streamAndPipeOFinCMO = (cvs, date) => {
+
+  let stream = fs.createReadStream(cvs);  
+  let csvData = [];
+  let csvStream = fastcsv
+  .parse()
+  .on("data", function(data) {
+    csvData.push(data);
+  })
+  .on("end", async function() {
+    for (let i = 0; i < csvData.length; i++ ){
+      // for (let i = 0; i < 5; i++ ){
+      // console.log(csvData[i])
+      // console.log(csvData[i][3].slice(1,csvData[i][3].length))
+      // console.log(csvData[i][4].slice(5,csvData[i][4].length))
+      const cmo = `${csvData[i][4].slice(5,csvData[i][4].length)}-${csvData[i][3].slice(1,csvData[i][3].length)}`
+      // console.log(cmo);
+      
+      try{
+      
+          await OFinCMO.create({ cmo, cusip: csvData[i][0], faceincmo: csvData[i][2], date })
+        }
+      
+      catch(ex){
+        console.log(ex)
       }
-    
-    catch(ex){
-      console.log(ex)
     }
-   }
-}
-);
+  }
+  );
 
-
-const streamAndPipe = () => {
   stream.pipe(csvStream); 
 }
 
 
+
 module.exports = {
-  streamAndPipe
+  streamAndPipeOFinCMO
 }
 
