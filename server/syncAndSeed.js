@@ -123,17 +123,28 @@ const {
     // platCollStreamer('data/platinums/platcoll_202105.csv', '2021-05');
     // platCollStreamer('data/platinums/platcoll_202106.csv', '2021-06');
 
+    // ------------------------------- this uses the new data to update is tba elig in platinum 
+
     // platinumUpdateStreamer('data/platinums/platinums_istbaelig_round_one.csv')
 
-    // platIstabaeligabletreamer('data/platinums/platinums_istbaelig_round_one.csv');
+    // platinumUpdateStreamer('data/platinums/platinums_istbaelig_round_two.csv')
 
-    // platIstabaeligabletreamer('data/platinums/platinums_istbaelig_round_two.csv');
+    // platinumUpdateStreamer('data/platinums/platinums_istbaelig_round_four.csv')
+
+    // platinumUpdateStreamer('data/platinums/round_five.csv')
+
+    // platinumUpdateStreamer('data/platinums/round_six.csv')
+
+    // platinumUpdateStreamer('data/platinums/round_seven.csv')
+
+    // platinumUpdateStreamer('data/platinums/round_eight.csv')
+    
 
     // ------------------------allmost all cmos -----------------
     // don't fully understand if this has a primary key
 
-    // probably messed something up by running this twice
-    streamAndPipeOFinCMO('data/cmos/allmostAllCMOs.csv', '2021-06');
+    // ONLY LOAD ONCE OR DATA WILL BE CORRUPTED 
+    // streamAndPipeOFinCMO('data/cmos/allmostAllCMOs.csv', '2021-06');
 
     // ------------------------ FED HOLDINGS -----------------
 
