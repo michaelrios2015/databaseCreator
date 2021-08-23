@@ -20,7 +20,8 @@ const {
   poolStreamer,
   poolBodyStreamer,
   poolPredictionStreamer,
-  poolFHAVAStreamer
+  poolFHAVAStreamer,
+  actualCPRStreamer
         } = require('./synchAndSeedHelpers/pools.js');
 
 const {
@@ -28,7 +29,8 @@ const {
   platinumBodyStreamer,
   platCollStreamer,
   platinumUpdateStreamer,
-  platIstabaeligabletreamer
+  platIstabaeligabletreamer,
+  platinumBodyCPRStreamer
     } = require('./synchAndSeedHelpers/platinums.js');
 
 
@@ -98,9 +100,12 @@ const {
 
     // poolStreamer('data/pools/monthlySFPS_202105.csv')
     // poolStreamer('data/pools/monthlySFPS_202106.csv')
+    // poolStreamer('data/pools/monthlySFPS_202107.csv')
+
 
     // poolBodyStreamer('data/pools/monthlySFPS_202105.csv', '2021-05');
     // poolBodyStreamer('data/pools/monthlySFPS_202106.csv', '2021-06');
+    // poolBodyStreamer('data/pools/monthlySFPS_202107.csv', '2021-07');
     
     // poolPredictionStreamer('data/pools/ginnie_202106_monthly_predictions_roll.csv', '2021-06')
     // poolPredictionStreamer('data/pools/ginnie_202107_monthly_predictions_roll.csv', '2021-07')
@@ -109,19 +114,25 @@ const {
     // poolFHAVAStreamer('data/pools/FHAVATest_20210615.csv', '2021-06');
     // poolFHAVAStreamer('data/pools/FHAVATest_20210715.csv', '2021-07');
 
+    // actualCPRStreamer('data/pools/actualCPR_202107.csv', '2021-07'); 
 
     // -----------Building Platinums one csv file at a time--------------
 
     // platinumStreamer('data/platinums/platmonPPS_202105.csv')
     // platinumStreamer('data/platinums/platmonPPS_202106.csv')
+    // platinumStreamer('data/platinums/platmonPPS_202107.csv')
 
     // platinumBodyStreamer('data/platinums/platmonPPS_202105.csv', '2021-05')
     // platinumBodyStreamer('data/platinums/platmonPPS_202106.csv', '2021-06');
-    
+    // platinumBodyStreamer('data/platinums/platmonPPS_202107.csv', '2021-07');
+
+    // platinumBodyCPRStreamer('data/platinums/plat_cpr_202107.csv', '2021-06-01')
+
     // don't fully understand if this has a primary key
 
     // platCollStreamer('data/platinums/platcoll_202105.csv', '2021-05');
     // platCollStreamer('data/platinums/platcoll_202106.csv', '2021-06');
+    // platCollStreamer('data/platinums/platcoll_202107.csv', '2021-07');
 
     // ------------------------------- this uses the new data to update is tba elig in platinum 
 
@@ -129,15 +140,7 @@ const {
 
     // platinumUpdateStreamer('data/platinums/platinums_istbaelig_round_two.csv')
 
-    // platinumUpdateStreamer('data/platinums/platinums_istbaelig_round_four.csv')
-
-    // platinumUpdateStreamer('data/platinums/round_five.csv')
-
-    // platinumUpdateStreamer('data/platinums/round_six.csv')
-
-    // platinumUpdateStreamer('data/platinums/round_seven.csv')
-
-    // platinumUpdateStreamer('data/platinums/round_eight.csv')
+ 
     
 
     // ------------------------allmost all cmos -----------------

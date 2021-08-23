@@ -1,5 +1,5 @@
 // this desperateley need to be seperated 
-const { db, models: { Pool, PoolBody, PoolPrediction, PoolFHAVA } } = require('../db');
+const { db, models: { Pool, PoolBody, PoolPrediction, PoolFHAVA, ActualCPR } } = require('../db');
 const Moment = require('moment');
 const fs = require("fs");
 const fastcsv = require("fast-csv");
@@ -212,11 +212,46 @@ const poolFHAVAStreamer = async(csv, date) => {
       await streamPoolsFHAVA.pipe(csvStreamPoolsFHAVA);
     }
 
-// CUSIP,total_outstanding,VPR,VPR_next,CDR,CDR_next,CPR,CPR_next
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+const actualCPRStreamer = async(csv, date) => {
+  let streamActualCPRS = fs.createReadStream(csv) 
+  let csvActualCPRS = [];
+  let csvStreamActualCPRS = fastcsv
+  .parse()
+  .on("data", function(data) {
+    // console.log('data')
+    csvActualCPRS.push(data);
+  })
+  .on("end", async function() {
+    for (let i = 0; i < csvActualCPRS.length; i++ ){
+    // for (let i = 1; i < 2; i++ ){    
+      // console.log(csvActualCPRS[i])
+    
+      const cusip = csvActualCPRS[i][0];
+      const actualcpr = csvActualCPRS[i][5] / 100
+      
+      // console.log(`${cusip}  ${actualcpr}  ${date}`)
+
+      try {
+            await ActualCPR.create({ cusip, actualcpr, date })
+          }
+      catch(ex){
+          console.log(ex)
+      }
+      
+    }
+  });
+
+  await streamActualCPRS.pipe(csvStreamActualCPRS);
+}
+
+
+
   
 module.exports = {
   poolStreamer,
   poolBodyStreamer,
   poolPredictionStreamer,
-  poolFHAVAStreamer
+  poolFHAVAStreamer,
+  actualCPRStreamer 
 };

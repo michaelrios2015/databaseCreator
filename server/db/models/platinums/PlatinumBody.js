@@ -26,6 +26,9 @@ const PlatinumBody = db.define('platinumbodies', {
   wala: { 
     type: INTEGER, 
   },
+  cpr: { 
+    type: FLOAT, 
+  },
   date: { 
     type: DATEONLY, 
     primaryKey: true  

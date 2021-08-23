@@ -65,7 +65,7 @@ async function platinumUpdateStreamer(csv) {
     for (let i = 1; i < csvPlatinums.length; i++ ){
     // for (let i = 0; i < 10; i++ ){    
       // console.log("------------------------------------");
-      console.log(csvPlatinums[i][1]);
+      // console.log(csvPlatinums[i][1]);
 
       let platinum = await Platinum.findByPk(csvPlatinums[i][0])
       
@@ -134,7 +134,7 @@ const platinumBodyStreamer = async(csv, date) => {
 
         try {
           await PlatinumBody.create({ cusip: csvPlatinumMonthBodies[i][1], interestrate: csvPlatinumMonthBodies[i][6], remainingbalance: csvPlatinumMonthBodies[i][9], 
-          factor: csvPlatinumMonthBodies[i][10], gwac: csvPlatinumMonthBodies[i][16], wam: csvPlatinumMonthBodies[i][17], wala: csvPlatinumMonthBodies[i][18], date})
+          factor: csvPlatinumMonthBodies[i][10], gwac: csvPlatinumMonthBodies[i][16], wam: csvPlatinumMonthBodies[i][17], wala: csvPlatinumMonthBodies[i][18], cpr: null, date})
         }
           catch(ex){
           console.log(ex)
@@ -145,6 +145,73 @@ const platinumBodyStreamer = async(csv, date) => {
 
   await streamMonthPlatinumBodies.pipe(csvStreamMonthPlatinumBodies);
 }
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// this adds the cpr 
+
+const platinumBodyCPRStreamer = async(csv, date) => {
+  let streamMonthPlatinumBodies = fs.createReadStream(csv)
+  let csvPlatinumMonthBodies = [];
+  let csvStreamMonthPlatinumBodies = fastcsv
+  .parse()
+  .on("data", function(data) {
+    // console.log('here')
+    if (data === ''){
+      data = null
+      console.log(data)
+    } 
+    csvPlatinumMonthBodies.push(data);
+  })
+  .on("end", async function() {
+    for (let i = 1; i < csvPlatinumMonthBodies.length; i++ ){
+    // for (let i = 1; i < 10; i++ ){    
+
+      // console.log("------------------------------------");
+      // console.log(csvPlatinumMonthBodies[i][0]);
+
+      // let platinumbody = await PlatinumBody.findOne({where: {cusip: csvPlatinumMonthBodies[i][0], date }})
+      // let body = await CMOBody.findOne({ where: {cmoheaderId: header.id, month: month}})
+
+      const cusip = csvPlatinumMonthBodies[i][0];
+      let cpr ;
+      if (csvPlatinumMonthBodies[i][1] === ''){
+        cpr = null;
+      }
+      else {
+        cpr = csvPlatinumMonthBodies[i][1];
+      }
+
+      // const istbaelig = isTBAelig(issuedate, maturitydate, originalface, type, indicator)
+      let [platbody, _] = (await db.query(`SELECT * FROM platinumbodies where cusip = '${cusip}' and date = '${date}';`));
+
+
+      // console.log(platinumbody[0]);
+
+      // console.log(platbody[0]);
+
+      // console.log(platbody[0]['cpr']);
+      // console.log(cusip);
+      // console.log(cpr);
+
+      if (platbody[0]['cpr'] === null && cpr !== null){
+        console.log('NULL')
+        await db.query(`UPDATE platinumbodies set cpr = '${cpr} 'where cusip = '${cusip}' and date = '${date}';`)
+        // platinum.cpr = csvPlatinums[i][1]
+        // await platinum.save()
+      }
+      else if (platbody[0]['cpr'] !== (cpr * 1) && cpr !== null) {
+        console.log('CPR UPDATED')
+        console.log(cpr);
+        await db.query(`UPDATE platinumbodies set cpr = '${cpr} 'where cusip = '${cusip}' and date = '${date}';`)
+        // await platinum.save()
+      }  
+    
+    }
+  });
+
+  await streamMonthPlatinumBodies.pipe(csvStreamMonthPlatinumBodies);
+}
+
 
 // ------------------------------------------------------------------------------------------------
 // first attempt at dealing with the collaterals
@@ -235,5 +302,6 @@ module.exports = {
   platinumStreamer,
   platinumBodyStreamer,
   platCollStreamer,
-  platinumUpdateStreamer
+  platinumUpdateStreamer,
+  platinumBodyCPRStreamer
 };
