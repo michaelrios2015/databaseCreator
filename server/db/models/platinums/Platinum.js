@@ -11,9 +11,6 @@ const Platinum = db.define('platinums', {
   name: { 
     type: STRING, 
   },
-  indicator: { 
-    type: STRING, 
-  },
   type: { 
     type: STRING, 
   },
@@ -25,10 +22,7 @@ const Platinum = db.define('platinums', {
   },
   originalface: { 
     type: FLOAT, 
-  },
-  istbaelig: {
-    type: BOOLEAN
-  }      
+  }     
 },{ timestamps: false });
 
 

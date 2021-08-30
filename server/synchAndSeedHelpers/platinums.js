@@ -30,8 +30,8 @@ async function platinumStreamer(csv) {
 
         if(!platinum){
           try {
-          await Platinum.create({ cusip: csvMonthPlatinums[i][1], name: csvMonthPlatinums[i][2], indicator: csvMonthPlatinums[i][3], type: csvMonthPlatinums[i][4], 
-              issuedate: csvMonthPlatinums[i][5], maturitydate: csvMonthPlatinums[i][7], originalface: csvMonthPlatinums[i][8], istbaelig: null })
+          await Platinum.create({ cusip: csvMonthPlatinums[i][1], name: csvMonthPlatinums[i][2], type: csvMonthPlatinums[i][4], 
+              issuedate: csvMonthPlatinums[i][5], maturitydate: csvMonthPlatinums[i][7], originalface: csvMonthPlatinums[i][8]})
           }
           catch(ex){
             console.log(ex)
@@ -62,22 +62,96 @@ async function platinumUpdateStreamer(csv) {
     csvPlatinums.push(data);
   })
   .on("end", async function() {
-    for (let i = 1; i < csvPlatinums.length; i++ ){
-    // for (let i = 0; i < 10; i++ ){    
-      // console.log("------------------------------------");
-      // console.log(csvPlatinums[i][1]);
-
-      let platinum = await Platinum.findByPk(csvPlatinums[i][0])
+    // for (let i = 1; i < csvPlatinums.length; i++ ){
+    for (let i = 1; i < 40; i++ ){    
+      console.log("------------------------------------");
+      // cusip,eligible,indicatorisx,indicatorism
+      const cusip = csvPlatinums[i][0];
+      const tbaelig = csvPlatinums[i][1];
+      const X = csvPlatinums[i][2];
+      const M = csvPlatinums[i][3];
       
-      if (platinum.istbaelig === null){
+      console.log(csvPlatinums[i][0]);
+      console.log(csvPlatinums[i][1]);
+      console.log(csvPlatinums[i][2]);
+      console.log(csvPlatinums[i][3]);
+
+      let platinumbody = await PlatinumBody.findByPk(csvPlatinums[i][0])
+      
+      // platinum body has a null value, we have not seen it before so  
+      if (platinumbody.istbaelig === null){
         console.log('NULL')
-        platinum.istbaelig = csvPlatinums[i][1]
-        await platinum.save()
+        // it is tba elig and (indictor is X or M)
+        if (tbaelig === 't' && (X === 't' || M === 't')){
+          console.log('IS TBA ELIG AND X OR M')
+          // platinumbody.istbaelig = tbaelig;
+          if (X === 't'){
+            // indictor is X
+            console.log('X is true')
+            // platinumbody.indicator = X;
+          } else {
+            // indictor is M
+            console.log('M is true')
+            // platinumbody.indicator = M;
+          }
+        }
+        else {
+          console.log('IS NOT TBA ELIG OR NOT (X OR M)')
+          // here we would make is tba elig false
+          // platinumbody.istbaelig = 'f';
+          if (X === 'f' && M === 'f'){
+            // both X and M are false so
+            console.log('X AND M ARE BOTH FALSE')
+            // make indictor C
+            // platinumbody.indicator = 'C';
+          }
+          // we are still in null so 
+          else if (X === 't'){
+            // indictor is X
+            console.log('X is true')
+            // platinumbody.indicator = X;
+          } 
+          else {
+            // indictor is M
+            console.log('M is true')
+            // platinumbody.indicator = M;
+          }
+
+
+        }
+        // await platinumbody.save()
       }
-      else if (platinum.istbaelig === true && csvPlatinums[i][1] === 'f') {
-        console.log('PLAT is true && subplats are false')
-        platinum.istbaelig = csvPlatinums[i][1]
-        await platinum.save()
+      // we have visted this platinum before 
+      else {
+        // tbaelig is false or indictor should be C
+        if (tbaelig === 'f' || (X  === 'f' && M  === 'f' )) {
+          console.log('Subplats are false or should be C indictor')
+          // platinumbody.istbaelig = tbaelig
+          // platinumbody.indicator = 'C';
+        }
+        
+        if (platinumbody.indicator === 'M' && M === 'f') {
+          console.log('Indicator was M should now be C also make istbaelig false')
+          // platinumbody.istbaelig = 'f'
+          // platinumbody.indicator = 'C';
+        }
+        else if (platinumbody.indicator === 'X' && X === 'f') {
+          console.log('Indicator was X should now be C also make istbaelig false')
+          // platinumbody.istbaelig = 'f'
+          // platinumbody.indicator = 'C';
+        }
+
+        else if (X  === 'f' && M  === 'f' ) {
+          console.log('Indicator was X should now be C also make istbaelig false')
+          // platinumbody.istbaelig = 'f'
+          // platinumbody.indicator = 'C';
+        }
+
+
+
+
+                // await platinum.save()
+  
       }  
  
     }
@@ -134,7 +208,7 @@ const platinumBodyStreamer = async(csv, date) => {
 
         try {
           await PlatinumBody.create({ cusip: csvPlatinumMonthBodies[i][1], interestrate: csvPlatinumMonthBodies[i][6], remainingbalance: csvPlatinumMonthBodies[i][9], 
-          factor: csvPlatinumMonthBodies[i][10], gwac: csvPlatinumMonthBodies[i][16], wam: csvPlatinumMonthBodies[i][17], wala: csvPlatinumMonthBodies[i][18], cpr: null, date})
+          factor: csvPlatinumMonthBodies[i][10], gwac: csvPlatinumMonthBodies[i][16], wam: csvPlatinumMonthBodies[i][17], wala: csvPlatinumMonthBodies[i][18], indicator: csvPlatinumMonthBodies[i][3], istbaelig: null,  cpr: null, date})
         }
           catch(ex){
           console.log(ex)
