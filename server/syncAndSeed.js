@@ -136,7 +136,7 @@ const {
 
     // ------------------------------- this uses the new data to update is tba elig in platinum 
 
-    platinumUpdateStreamer('data/platinums/platinums_istbaelig_round_one.csv')
+    // platinumUpdateStreamer('data/platinums/platinums_istbaelig_round_one.csv')
 
     // platinumUpdateStreamer('data/platinums/platinums_istbaelig_round_two.csv')
 
