@@ -109,7 +109,7 @@ const {
     
     // poolPredictionStreamer('data/pools/ginnie_202106_monthly_predictions_roll.csv', '2021-06')
     // poolPredictionStreamer('data/pools/ginnie_202107_monthly_predictions_roll.csv', '2021-07')
-    
+    // poolPredictionStreamer('data/pools/ginnie_202108_monthly_predictions_roll.csv', '2021-08')
 
     // poolFHAVAStreamer('data/pools/FHAVATest_20210615.csv', '2021-06');
     // poolFHAVAStreamer('data/pools/FHAVATest_20210715.csv', '2021-07');
@@ -128,6 +128,8 @@ const {
 
     // platinumBodyCPRStreamer('data/platinums/plat_cpr_202107.csv', '2021-06-01')
 
+    // platinumBodyCPRStreamer('data/platinums/plat_cpr_prediction_202108.csv', '2021-07-01')
+
     // don't fully understand if this has a primary key
 
     // platCollStreamer('data/platinums/platcoll_202105.csv', '2021-05');
@@ -137,8 +139,6 @@ const {
     // ------------------------------- this uses the new data to update is tba elig in platinum 
 
     // platinumUpdateStreamer('data/platinums/platinums_istbaelig_round_one.csv')
-
-    // platinumUpdateStreamer('data/platinums/platinums_istbaelig_round_two.csv')
 
  
     

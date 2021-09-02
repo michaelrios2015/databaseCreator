@@ -62,96 +62,119 @@ async function platinumUpdateStreamer(csv) {
     csvPlatinums.push(data);
   })
   .on("end", async function() {
-    // for (let i = 1; i < csvPlatinums.length; i++ ){
-    for (let i = 1; i < 40; i++ ){    
-      console.log("------------------------------------");
+    for (let i = 1; i < csvPlatinums.length; i++ ){
+    // for (let i = 11; i < 12; i++ ){    
+      // console.log("------------------------------------");
       // cusip,eligible,indicatorisx,indicatorism
+      
+      for (let j = 0; j < 4; j++){
+        if (csvPlatinums[i][j] === ''){
+          csvPlatinums[i][j] = null
+        }
+      }; 
+      
       const cusip = csvPlatinums[i][0];
       const tbaelig = csvPlatinums[i][1];
       const X = csvPlatinums[i][2];
       const M = csvPlatinums[i][3];
       
-      console.log(csvPlatinums[i][0]);
-      console.log(csvPlatinums[i][1]);
-      console.log(csvPlatinums[i][2]);
-      console.log(csvPlatinums[i][3]);
 
-      let platinumbody = await PlatinumBody.findByPk(csvPlatinums[i][0])
+
+
+      // console.log(csvPlatinums[i][0]);
+      // console.log(csvPlatinums[i][1]);
+      // console.log(csvPlatinums[i][2]);
+      // console.log(csvPlatinums[i][3]);
+
+      // let platinumbody = await PlatinumBody.findByPk(csvPlatinums[i][0])
       
+      let [platbody, _] = (await db.query(`SELECT * FROM platinumbodies where cusip = '${csvPlatinums[i][0]}' and date = '2021/07/01';`));
+
+
+      // console.log(platinumbody);
+
+      // console.log(platbody[0]);
+
+      let platinumbody = platbody[0]
       // platinum body has a null value, we have not seen it before so  
-      if (platinumbody.istbaelig === null){
+      if (X === 't' && M === 't'){
+        // this should not happen it means we have not actually seen anything yet 
+      }
+      else if (platinumbody.istbaelig === null){
         console.log('NULL')
-        // it is tba elig and (indictor is X or M)
+        // it is tba elig and (indictor is X or M, they cannot both be t I could add the logic but it's just not possible at the moment)
         if (tbaelig === 't' && (X === 't' || M === 't')){
           console.log('IS TBA ELIG AND X OR M')
-          // platinumbody.istbaelig = tbaelig;
+          platinumbody.istbaelig = tbaelig;
           if (X === 't'){
             // indictor is X
             console.log('X is true')
-            // platinumbody.indicator = X;
+            platinumbody.indicator = 'X';
           } else {
             // indictor is M
             console.log('M is true')
-            // platinumbody.indicator = M;
+            platinumbody.indicator = 'M';
           }
         }
         else {
           console.log('IS NOT TBA ELIG OR NOT (X OR M)')
           // here we would make is tba elig false
-          // platinumbody.istbaelig = 'f';
+          platinumbody.istbaelig = 'f';
           if (X === 'f' && M === 'f'){
             // both X and M are false so
             console.log('X AND M ARE BOTH FALSE')
             // make indictor C
-            // platinumbody.indicator = 'C';
+            platinumbody.indicator = 'C';
           }
           // we are still in null so 
           else if (X === 't'){
             // indictor is X
             console.log('X is true')
-            // platinumbody.indicator = X;
+            platinumbody.indicator = 'X';
           } 
           else {
             // indictor is M
             console.log('M is true')
-            // platinumbody.indicator = M;
+            platinumbody.indicator = 'M';
           }
-
-
         }
+
+        // console.log(platinumbody)
+
         // await platinumbody.save()
+      
+        await db.query(`UPDATE platinumbodies SET istbaelig = '${platinumbody.istbaelig}', indicator = '${platinumbody.indicator}' WHERE cusip = '${platinumbody.cusip}' AND date = '2021-07-01';`);
       }
       // we have visted this platinum before 
       else {
-        // tbaelig is false or indictor should be C
-        if (tbaelig === 'f' || (X  === 'f' && M  === 'f' )) {
-          console.log('Subplats are false or should be C indictor')
-          // platinumbody.istbaelig = tbaelig
-          // platinumbody.indicator = 'C';
+        // tbaelig is false 
+        if (platinumbody.istbaelig === 't' && tbaelig === 'f') {
+          console.log('was tba elig now not, Subplats are false')
+          platinumbody.istbaelig = tbaelig
         }
-        
+        // in theory I can add some more code to check that x is false but if M was tru and now it's not then C is the only one that can be true
         if (platinumbody.indicator === 'M' && M === 'f') {
           console.log('Indicator was M should now be C also make istbaelig false')
-          // platinumbody.istbaelig = 'f'
-          // platinumbody.indicator = 'C';
+          platinumbody.istbaelig = 'f'
+          platinumbody.indicator = 'C';
         }
+        // see above but with X
         else if (platinumbody.indicator === 'X' && X === 'f') {
           console.log('Indicator was X should now be C also make istbaelig false')
-          // platinumbody.istbaelig = 'f'
-          // platinumbody.indicator = 'C';
+          platinumbody.istbaelig = 'f'
+          platinumbody.indicator = 'C';
         }
-
-        else if (X  === 'f' && M  === 'f' ) {
+        // I don't think we will get to this 
+        else if (platinumbody.indicator !== 'C' && (X  === 'f' && M  === 'f' )) {
           console.log('Indicator was X should now be C also make istbaelig false')
-          // platinumbody.istbaelig = 'f'
-          // platinumbody.indicator = 'C';
+          platinumbody.istbaelig = 'f'
+          platinumbody.indicator = 'C';
         }
 
+        //  await platinum.save()
+        // console.log(platinumbody)
 
-
-
-                // await platinum.save()
-  
+        await db.query(`UPDATE platinumbodies SET istbaelig = '${platinumbody.istbaelig}', indicator = '${platinumbody.indicator}' WHERE cusip = '${platinumbody.cusip}' AND date = '2021-07-01';`);
       }  
  
     }
@@ -224,6 +247,7 @@ const platinumBodyStreamer = async(csv, date) => {
 // this adds the cpr 
 
 const platinumBodyCPRStreamer = async(csv, date) => {
+  let j = 0;
   let streamMonthPlatinumBodies = fs.createReadStream(csv)
   let csvPlatinumMonthBodies = [];
   let csvStreamMonthPlatinumBodies = fastcsv
@@ -267,7 +291,12 @@ const platinumBodyCPRStreamer = async(csv, date) => {
       // console.log(cusip);
       // console.log(cpr);
 
-      if (platbody[0]['cpr'] === null && cpr !== null){
+      
+      
+      if (!platbody[0]){
+        // can't find it in database maybe using wrong dates??
+      }
+      else if (platbody[0]['cpr'] === null && cpr !== null){
         console.log('NULL')
         await db.query(`UPDATE platinumbodies set cpr = '${cpr} 'where cusip = '${cusip}' and date = '${date}';`)
         // platinum.cpr = csvPlatinums[i][1]
@@ -278,9 +307,13 @@ const platinumBodyCPRStreamer = async(csv, date) => {
         console.log(cpr);
         await db.query(`UPDATE platinumbodies set cpr = '${cpr} 'where cusip = '${cusip}' and date = '${date}';`)
         // await platinum.save()
+        j++;
+        console.log(j);
       }  
     
+      
     }
+    
   });
 
   await streamMonthPlatinumBodies.pipe(csvStreamMonthPlatinumBodies);
