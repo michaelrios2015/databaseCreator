@@ -128,6 +128,8 @@ const {
 
     // platinumBodyCPRStreamer('data/platinums/plat_cpr_202107.csv', '2021-06-01')
 
+    // platinumBodyCPRStreamer('data/platinums/plat_cpr_202107_two.csv', '2021-06-01')
+
     // platinumBodyCPRStreamer('data/platinums/plat_cpr_prediction_202108.csv', '2021-07-01')
 
     // don't fully understand if this has a primary key
