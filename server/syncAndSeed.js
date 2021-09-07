@@ -21,7 +21,8 @@ const {
   poolBodyStreamer,
   poolPredictionStreamer,
   poolFHAVAStreamer,
-  actualCPRStreamer
+  actualCPRStreamer,
+  actualCDRStreamer
         } = require('./synchAndSeedHelpers/pools.js');
 
 const {
@@ -115,6 +116,8 @@ const {
     // poolFHAVAStreamer('data/pools/FHAVATest_20210715.csv', '2021-07');
 
     // actualCPRStreamer('data/pools/actualCPR_202107.csv', '2021-07'); 
+
+    // actualCDRStreamer('data/pools/actualCDR_202107.csv', '2021-07'); 
 
     // -----------Building Platinums one csv file at a time--------------
 

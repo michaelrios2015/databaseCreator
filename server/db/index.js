@@ -8,6 +8,7 @@ const PoolBody = require("./models/pools/PoolBody");
 const PoolPrediction = require("./models/pools/PoolPrediction");
 const PoolFHAVA = require("./models/pools/PoolFHAVA");
 const ActualCPR = require("./models/pools/ActualCPR");
+const ActualCDR = require("./models/pools/ActualCDR");
 const Platinum = require("./models/platinums/Platinum");
 const PlatinumBody = require("./models/platinums/PlatinumBody");
 const PlatColl = require("./models/platinums/PlatColl");
@@ -37,6 +38,7 @@ module.exports = {
 		PoolPrediction,
 		PoolFHAVA,
 		ActualCPR,
+		ActualCDR,
 		Platinum,
 		PlatinumBody,
 		PlatColl,

@@ -1,8 +1,6 @@
 const db = require('../../db')
 const Sequelize = require('sequelize');
-const Moment = require('moment');
-const { BOOLEAN } = require('sequelize');
-const { INTEGER, STRING, FLOAT, VIRTUAL, DATEONLY } = Sequelize;
+const { STRING, FLOAT, DATEONLY } = Sequelize;
 
 
 const ActualCPR = db.define('actualcprs', {
