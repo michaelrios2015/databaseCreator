@@ -22,7 +22,8 @@ const {
   poolPredictionStreamer,
   poolFHAVAStreamer,
   actualCPRStreamer,
-  actualCDRStreamer
+  actualCDRStreamer,
+  actualCPRStreamerTwo
         } = require('./synchAndSeedHelpers/pools.js');
 
 const {
@@ -116,6 +117,8 @@ const {
     // poolFHAVAStreamer('data/pools/FHAVATest_20210715.csv', '2021-07');
 
     // actualCPRStreamer('data/pools/actualCPR_202107.csv', '2021-07'); 
+    
+    // actualCPRStreamerTwo('data/pools/actualCDR_CPR_202108.csv', '2021-08'); 
 
     // actualCDRStreamer('data/pools/actualCDR_202107.csv', '2021-07'); 
 
@@ -125,10 +128,14 @@ const {
     // platinumStreamer('data/platinums/platmonPPS_202106.csv')
     // platinumStreamer('data/platinums/platmonPPS_202107.csv')
 
+   
     // platinumBodyStreamer('data/platinums/platmonPPS_202105.csv', '2021-05')
     // platinumBodyStreamer('data/platinums/platmonPPS_202106.csv', '2021-06');
     // platinumBodyStreamer('data/platinums/platmonPPS_202107.csv', '2021-07');
 
+    // platinumBodyStreamer('data/platinums/platmonPPS_202107.csv', '2021-08');
+  
+   
     // platinumBodyCPRStreamer('data/platinums/plat_cpr_202107.csv', '2021-06-01')
 
     // platinumBodyCPRStreamer('data/platinums/plat_cpr_202107_two.csv', '2021-06-01')
