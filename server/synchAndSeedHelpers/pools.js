@@ -264,7 +264,7 @@ const actualCPRStreamerTwo = async(csv, date) => {
       // console.log(csvActualCPRS[i])
     
       const cusip = csvActualCPRS[i][0];
-      const actualcpr = csvActualCPRS[i][6] / 100
+      const actualcpr = csvActualCPRS[i][1] / 100
       
       // console.log(`${cusip}  ${actualcpr}  ${date}`)
 
@@ -316,6 +316,40 @@ const actualCDRStreamer = async(csv, date) => {
   await streamActualCDRS.pipe(csvStreamActualCDRS);
 }
 
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+const actualCDRStreamerTwo = async(csv, date) => {
+  let streamActualCDRS = fs.createReadStream(csv) 
+  let csvActualCDRS = [];
+  let csvStreamActualCDRS = fastcsv
+  .parse()
+  .on("data", function(data) {
+    // console.log('data')
+    csvActualCDRS.push(data);
+  })
+  .on("end", async function() {
+    for (let i = 0; i < csvActualCDRS.length; i++ ){
+    // for (let i = 1; i < 10; i++ ){    
+      // console.log(csvActualCDRS[i])
+    
+      const cusip = csvActualCDRS[i][0];
+      
+      const cdr = csvActualCDRS[i][1] / 100
+      
+      // console.log(`${cusip}  ${cdr}  ${date}`)
+
+      try {
+            await ActualCDR.create({ cusip, cdr, date })
+          }
+      catch(ex){
+          console.log(ex)
+      }
+      
+    }
+  });
+
+  await streamActualCDRS.pipe(csvStreamActualCDRS);
+}
 
 
   
@@ -325,6 +359,7 @@ module.exports = {
   poolPredictionStreamer,
   poolFHAVAStreamer,
   actualCPRStreamer,
+  actualCPRStreamerTwo,
   actualCDRStreamer,
-  actualCPRStreamerTwo  
+  actualCDRStreamerTwo  
 };

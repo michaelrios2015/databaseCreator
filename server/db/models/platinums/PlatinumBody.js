@@ -34,7 +34,10 @@ const PlatinumBody = db.define('platinumbodies', {
   },
   cpr: { 
     type: FLOAT, 
-  },  
+  },
+  cdr: { 
+    type: FLOAT, 
+  },    
   date: { 
     type: DATEONLY, 
     primaryKey: true  

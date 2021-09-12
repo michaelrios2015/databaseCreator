@@ -22,8 +22,9 @@ const {
   poolPredictionStreamer,
   poolFHAVAStreamer,
   actualCPRStreamer,
+  actualCPRStreamerTwo,
   actualCDRStreamer,
-  actualCPRStreamerTwo
+  actualCDRStreamerTwo  
         } = require('./synchAndSeedHelpers/pools.js');
 
 const {
@@ -118,9 +119,11 @@ const {
 
     // actualCPRStreamer('data/pools/actualCPR_202107.csv', '2021-07'); 
     
-    // actualCPRStreamerTwo('data/pools/actualCDR_CPR_202108.csv', '2021-08'); 
+    // actualCPRStreamerTwo('data/pools/actualCPR_202108.csv', '2021-08'); 
 
     // actualCDRStreamer('data/pools/actualCDR_202107.csv', '2021-07'); 
+
+    // actualCDRStreamerTwo('data/pools/actualCDR_202108.csv', '2021-08'); 
 
     // -----------Building Platinums one csv file at a time--------------
 
