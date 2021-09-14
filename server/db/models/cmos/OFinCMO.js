@@ -2,7 +2,7 @@ const db = require('../../db')
 const Sequelize = require('sequelize');
 const { STRING, FLOAT, DATEONLY } = Sequelize;
 
-
+// add group composit key cmo, cusip, group 
 const OFinCMO = db.define('ofincmo', {
     cmo: { 
       type: STRING, 
