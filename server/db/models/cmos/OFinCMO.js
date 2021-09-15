@@ -13,8 +13,7 @@ const OFinCMO = db.define('ofincmo', {
       // primaryKey: true  
     },
     faceincmo: { 
-        type: FLOAT,
-        // primaryKey: true  
+        type: FLOAT,  
     },
     date: { 
         type: DATEONLY,
