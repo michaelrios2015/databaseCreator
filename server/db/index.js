@@ -2,6 +2,7 @@ const db = require("./db");
 const CMOBody = require("./models/cmos/CMOBody");
 const CMOHeader = require("./models/cmos/CMOHeader");
 const OFinCMO = require("./models/cmos/OFinCMO");
+const UniqueOFinCMO = require("./models/cmos/UniqueOFinCMO");
 const CPN = require("./models/CPN");
 const Pool = require("./models/pools/Pool");
 const PoolBody = require("./models/pools/PoolBody");
@@ -43,6 +44,7 @@ module.exports = {
 		PlatinumBody,
 		PlatColl,
 		OFinCMO,
+		UniqueOFinCMO,
 		FedHolding
 	},
 };

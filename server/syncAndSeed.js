@@ -38,7 +38,8 @@ const {
 
 
 const {
-  streamAndPipeOFinCMO
+  streamAndPipeOFinCMO,
+  streamAndPipeUniqueOFinCMO
 } = require('./synchAndSeedHelpers/allmostallcmos.js')   
 
 const {
@@ -104,15 +105,19 @@ const {
     // poolStreamer('data/pools/monthlySFPS_202105.csv')
     // poolStreamer('data/pools/monthlySFPS_202106.csv')
     // poolStreamer('data/pools/monthlySFPS_202107.csv')
+    // poolStreamer('data/pools/monthlySFPS_202108.csv')
 
 
     // poolBodyStreamer('data/pools/monthlySFPS_202105.csv', '2021-05');
     // poolBodyStreamer('data/pools/monthlySFPS_202106.csv', '2021-06');
     // poolBodyStreamer('data/pools/monthlySFPS_202107.csv', '2021-07');
+    // poolBodyStreamer('data/pools/monthlySFPS_202108.csv', '2021-08');
     
+
     // poolPredictionStreamer('data/pools/ginnie_202106_monthly_predictions_roll.csv', '2021-06')
     // poolPredictionStreamer('data/pools/ginnie_202107_monthly_predictions_roll.csv', '2021-07')
     // poolPredictionStreamer('data/pools/ginnie_202108_monthly_predictions_roll.csv', '2021-08')
+    // poolPredictionStreamer('data/pools/ginnie_202109_monthly_predictions_roll.csv', '2021-09')
 
     // poolFHAVAStreamer('data/pools/FHAVATest_20210615.csv', '2021-06');
     // poolFHAVAStreamer('data/pools/FHAVATest_20210715.csv', '2021-07');
@@ -130,13 +135,13 @@ const {
     // platinumStreamer('data/platinums/platmonPPS_202105.csv')
     // platinumStreamer('data/platinums/platmonPPS_202106.csv')
     // platinumStreamer('data/platinums/platmonPPS_202107.csv')
-
+    // platinumStreamer('data/platinums/platmonPPS_202108.csv')
    
     // platinumBodyStreamer('data/platinums/platmonPPS_202105.csv', '2021-05')
     // platinumBodyStreamer('data/platinums/platmonPPS_202106.csv', '2021-06');
     // platinumBodyStreamer('data/platinums/platmonPPS_202107.csv', '2021-07');
 
-    // platinumBodyStreamer('data/platinums/platmonPPS_202107.csv', '2021-08');
+    // platinumBodyStreamer('data/platinums/platmonPPS_202108.csv', '2021-08');
   
    
     // platinumBodyCPRStreamer('data/platinums/plat_cpr_202107.csv', '2021-06-01')
@@ -150,6 +155,7 @@ const {
     // platCollStreamer('data/platinums/platcoll_202105.csv', '2021-05');
     // platCollStreamer('data/platinums/platcoll_202106.csv', '2021-06');
     // platCollStreamer('data/platinums/platcoll_202107.csv', '2021-07');
+    // platCollStreamer('data/platinums/platcoll_202108.csv', '2021-08');
 
     // ------------------------------- this uses the new data to update is tba elig in platinum 
 
@@ -163,6 +169,9 @@ const {
 
     // ONLY LOAD ONCE OR DATA WILL BE CORRUPTED 
     // streamAndPipeOFinCMO('data/cmos/allmostAllCMOs.csv', '2021-06');
+    // streamAndPipeOFinCMO('data/cmos/CMOS_202107.csv', '2021-07');
+    // streamAndPipeOFinCMO('data/cmos/CMOS_202108.csv', '2021-08');
+
 
     // ------------------------ FED HOLDINGS -----------------
 

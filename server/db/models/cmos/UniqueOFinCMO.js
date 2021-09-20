@@ -3,25 +3,25 @@ const Sequelize = require('sequelize');
 const { STRING, FLOAT, DATEONLY } = Sequelize;
 
 // add group composit key cmo, cusip, group 
-const OFinCMO = db.define('ofincmo', {
+const UniqueOFinCMO = db.define('uniqueofincmo', {
     cmo: { 
       type: STRING, 
-      // primaryKey: true 
+      primaryKey: true 
     },
     cusip: { 
       type: STRING,
-      // primaryKey: true  
+      primaryKey: true  
     },
     faceincmo: { 
         type: FLOAT,  
     },
     date: { 
         type: DATEONLY,
-        // primaryKey: true  
+        primaryKey: true  
     }    
 },{ timestamps: false });
 
-module.exports = OFinCMO;
+module.exports = UniqueOFinCMO;
 
 
 // that should work 
@@ -31,4 +31,6 @@ module.exports = OFinCMO;
 //         name VARCHAR(100) NOT NULL
 //     );
 //     `)
+
+
 
