@@ -18,7 +18,11 @@ const UniqueOFinCMO = db.define('uniqueofincmo', {
     date: { 
         type: DATEONLY,
         primaryKey: true  
-    }    
+    },
+    collapsed: { 
+      type: DATEONLY,
+      primaryKey: true  
+  }    
 },{ timestamps: false });
 
 module.exports = UniqueOFinCMO;
