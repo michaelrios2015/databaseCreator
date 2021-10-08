@@ -35,6 +35,9 @@ const PlatinumBody = db.define('platinumbodies', {
   cpr: { 
     type: FLOAT, 
   },
+  predictedcpr: { 
+    type: FLOAT, 
+  },
   cdr: { 
     type: FLOAT, 
   },    
