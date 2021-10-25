@@ -122,6 +122,8 @@ const {
 
     // poolFHAVAStreamer('data/pools/FHAVATest_20210615.csv', '2021-06');
     // poolFHAVAStreamer('data/pools/FHAVATest_20210715.csv', '2021-07');
+    // mising august and september
+    // poolFHAVAStreamer('data/pools/FHAVATest_20211024.csv', '2021-10');
 
     // Actual CPR STREAMS
     // actualCPRStreamer('data/pools/actualCPR_202107.csv', '2021-07'); 
@@ -174,18 +176,18 @@ const {
     // streamAndPipeOFinCMO('data/cmos/allmostAllCMOs.csv', '2021-06');
     // streamAndPipeOFinCMO('data/cmos/CMOS_202107.csv', '2021-07');
     // streamAndPipeOFinCMO('data/cmos/CMOS_202108.csv', '2021-08');
+    // streamAndPipeOFinCMO('data/cmos/CMOS_202109.csv', '2021-09');
 
 
     // ------------------------ FED HOLDINGS -----------------
 
 
     // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20210630.csv');
-
     // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20210714.csv');
-    
     // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20210721.csv');
-    
     // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20210922.csv');
+    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20211020.csv');
+  
   };
 
   
