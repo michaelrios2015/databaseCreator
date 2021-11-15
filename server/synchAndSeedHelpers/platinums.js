@@ -220,7 +220,7 @@ const platinumBodyStreamer = async(csv, date) => {
         // 36202BYW9 does not have 
 
         if (csvPlatinumMonthBodies[i][16] === ''){
-          csvPPlatinumMonthBodies[i][16] = null;
+          csvPlatinumMonthBodies[i][16] = null;
         }
         if (csvPlatinumMonthBodies[i][17] === ''){
           csvPlatinumMonthBodies[i][17] = null;
