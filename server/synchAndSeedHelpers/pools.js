@@ -36,15 +36,11 @@ async function poolStreamer(csv) {
     delimiter: '|'
   })
   .on("data", function(data) {
-    // console.log('here')
     csvMonthPools.push(data);
   })
   .on("end", async function() {
     for (let i = 0; i < csvMonthPools.length; i++ ){
-    // for (let i = 0; i < 3; i++ ){    
-      // console.log("------------------------------------");
-      // console.log(i);
-      // console.log(csvPools[i][0]);
+
       if (csvMonthPools[i][0] === 'PS' ){
         // console.log("------------------------------------");
         const cusip  = csvMonthPools[i][1];
@@ -61,7 +57,6 @@ async function poolStreamer(csv) {
         const istbaelig = isTBAelig(issuedate, maturitydate, originalface, type, indicator)
         let [pool, _] = (await db.query(`SELECT cusip FROM pools where cusip = '${cusip}';`));
         // console.log(pool[0]);
-        // let pool = await Pool.findByPk(cusip)
 
         if(!pool[0]){
         // console.log('no pool')
@@ -72,6 +67,10 @@ async function poolStreamer(csv) {
             console.log(ex)
           }
         }  
+      }
+
+      if (i === csvMonthPools.length - 1) {
+        console.log('----DONE----')
       }
     }
 
@@ -106,16 +105,8 @@ async function poolStreamer(csv) {
     })
     .on("end", async function() {
       for (let i = 0; i < csvPoolMonthBodies.length; i++ ){
-      // for (let i = 0; i < 10; i++ ){    
-
-        // console.log("------------------------------------");
-        // console.log(i);
-        // console.log(csvPools[i][0]);
 
         if (csvPoolMonthBodies[i][0] === 'PS' ){
-          // console.log("------------------------------------");
-          // console.log(csvPoolBodies[i][1]);
-          // 36202BYW9 does not have 
 
           if (csvPoolMonthBodies[i][17] === ''){
             csvPoolMonthBodies[i][17] = null;
@@ -135,6 +126,11 @@ async function poolStreamer(csv) {
             console.log(ex)
           }
         }
+
+        if (i === csvPoolMonthBodies.length - 1) {
+          console.log('----DONE----')
+        }
+  
       }
     });
 
@@ -193,24 +189,18 @@ const poolFHAVAStreamer = async(csv, date) => {
       // for (let i = 1; i < 10; i++ ){    
   
       // so need to search throug poolbodies for cusip and month get the id and use that to set the poolprediction ID all non connected ones will be lost 
-  
-  
-          try {
-  
-                await PoolFHAVA.create({ cusip: csvPoolFHAVA[i][0], fha: csvPoolFHAVA[i][1], va: csvPoolFHAVA[i][2], rural: csvPoolFHAVA[i][3], 
+        try {
+          await PoolFHAVA.create({ cusip: csvPoolFHAVA[i][0], fha: csvPoolFHAVA[i][1], va: csvPoolFHAVA[i][2], rural: csvPoolFHAVA[i][3], 
                   indian: csvPoolFHAVA[i][4], date })
-            // }
-            }
-              catch(ex){
-                console.log(ex)
-              }
-  
-  
+          }
+        catch(ex){
+          console.log(ex)
+          }
         }
-  
       });
-
+      
       await streamPoolsFHAVA.pipe(csvStreamPoolsFHAVA);
+    
     }
 
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -338,21 +328,17 @@ const actualCDRStreamerTwo = async(csv, date) => {
       const cdr = csvActualCDRS[i][1] / 100
       
       // console.log(`${cusip}  ${cdr}  ${date}`)
-
       try {
-            await ActualCDR.create({ cusip, cdr, date })
-          }
+        await ActualCDR.create({ cusip, cdr, date })
+        }
       catch(ex){
-          console.log(ex)
+        console.log(ex)
       }
-      
     }
   });
 
   await streamActualCDRS.pipe(csvStreamActualCDRS);
 }
-
-
   
 module.exports = {
   poolStreamer,

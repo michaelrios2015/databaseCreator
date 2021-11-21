@@ -40,11 +40,18 @@ let csvStream = fastcsv
     catch(ex){
       console.log(ex)
     }
-   }
-}
-);
+   
+    if (i === csvData.length - 1){
+      console.log('-------DONE--------')
+    }
+
+  }
+
+  
+});
 
 stream.pipe(csvStream);
+
 }
 
 

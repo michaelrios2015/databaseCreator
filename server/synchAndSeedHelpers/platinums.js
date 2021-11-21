@@ -19,13 +19,9 @@ async function platinumStreamer(csv) {
   })
   .on("end", async function() {
     for (let i = 0; i < csvMonthPlatinums.length; i++ ){
-    // for (let i = 0; i < 10; i++ ){    
-      // console.log("------------------------------------");
-      // console.log(i);
-      // console.log(csvPools[i][0]);
+    
       if (csvMonthPlatinums[i][0] === 'PS' ){
-        // console.log("------------------------------------");
-        // console.log(csvPools[i]);
+    
         let platinum = await Platinum.findByPk(csvMonthPlatinums[i][1])
 
         if(!platinum){
@@ -38,6 +34,11 @@ async function platinumStreamer(csv) {
           }
         }  
       }
+    
+      if (i === csvMonthPlatinums.length - 1){
+        console.log('--------DONE-------')
+      }
+    
     }
   });
 
@@ -46,145 +47,6 @@ async function platinumStreamer(csv) {
   // console.log(streamMonthPools);
   // await streamAprilData.pipe(csvAprilStream);
   await streamMonthPlatinums.pipe(csvStreamMonthPlatinums);
-}
-
-// ------------------------------------------------------------------------------------------------------------
-// We have checked the platinums to see if the pools are is tba eligible so now we need to update platimuns
-
-async function platinumUpdateStreamer(csv) {
-
-  let streamPlatinums = fs.createReadStream(csv)
-  let csvPlatinums = [];
-  let csvStreamPlatinums = fastcsv
-  .parse()
-  .on("data", function(data) {
-    // console.log('here')
-    csvPlatinums.push(data);
-  })
-  .on("end", async function() {
-    for (let i = 1; i < csvPlatinums.length; i++ ){
-    // for (let i = 11; i < 12; i++ ){    
-      // console.log("------------------------------------");
-      // cusip,eligible,indicatorisx,indicatorism
-      
-      for (let j = 0; j < 4; j++){
-        if (csvPlatinums[i][j] === ''){
-          csvPlatinums[i][j] = null
-        }
-      }; 
-      
-      const cusip = csvPlatinums[i][0];
-      const tbaelig = csvPlatinums[i][1];
-      const X = csvPlatinums[i][2];
-      const M = csvPlatinums[i][3];
-      
-
-
-
-      // console.log(csvPlatinums[i][0]);
-      // console.log(csvPlatinums[i][1]);
-      // console.log(csvPlatinums[i][2]);
-      // console.log(csvPlatinums[i][3]);
-
-      // let platinumbody = await PlatinumBody.findByPk(csvPlatinums[i][0])
-      
-      let [platbody, _] = (await db.query(`SELECT * FROM platinumbodies where cusip = '${csvPlatinums[i][0]}' and date = '2021/07/01';`));
-
-
-      // console.log(platinumbody);
-
-      // console.log(platbody[0]);
-
-      let platinumbody = platbody[0]
-      // platinum body has a null value, we have not seen it before so  
-      if (X === 't' && M === 't'){
-        // this should not happen it means we have not actually seen anything yet 
-      }
-      else if (platinumbody.istbaelig === null){
-        console.log('NULL')
-        // it is tba elig and (indictor is X or M, they cannot both be t I could add the logic but it's just not possible at the moment)
-        if (tbaelig === 't' && (X === 't' || M === 't')){
-          console.log('IS TBA ELIG AND X OR M')
-          platinumbody.istbaelig = tbaelig;
-          if (X === 't'){
-            // indictor is X
-            console.log('X is true')
-            platinumbody.indicator = 'X';
-          } else {
-            // indictor is M
-            console.log('M is true')
-            platinumbody.indicator = 'M';
-          }
-        }
-        else {
-          console.log('IS NOT TBA ELIG OR NOT (X OR M)')
-          // here we would make is tba elig false
-          platinumbody.istbaelig = 'f';
-          if (X === 'f' && M === 'f'){
-            // both X and M are false so
-            console.log('X AND M ARE BOTH FALSE')
-            // make indictor C
-            platinumbody.indicator = 'C';
-          }
-          // we are still in null so 
-          else if (X === 't'){
-            // indictor is X
-            console.log('X is true')
-            platinumbody.indicator = 'X';
-          } 
-          else {
-            // indictor is M
-            console.log('M is true')
-            platinumbody.indicator = 'M';
-          }
-        }
-
-        // console.log(platinumbody)
-
-        // await platinumbody.save()
-      
-        await db.query(`UPDATE platinumbodies SET istbaelig = '${platinumbody.istbaelig}', indicator = '${platinumbody.indicator}' WHERE cusip = '${platinumbody.cusip}' AND date = '2021-07-01';`);
-      }
-      // we have visted this platinum before 
-      else {
-        // tbaelig is false 
-        if (platinumbody.istbaelig === 't' && tbaelig === 'f') {
-          console.log('was tba elig now not, Subplats are false')
-          platinumbody.istbaelig = tbaelig
-        }
-        // in theory I can add some more code to check that x is false but if M was tru and now it's not then C is the only one that can be true
-        if (platinumbody.indicator === 'M' && M === 'f') {
-          console.log('Indicator was M should now be C also make istbaelig false')
-          platinumbody.istbaelig = 'f'
-          platinumbody.indicator = 'C';
-        }
-        // see above but with X
-        else if (platinumbody.indicator === 'X' && X === 'f') {
-          console.log('Indicator was X should now be C also make istbaelig false')
-          platinumbody.istbaelig = 'f'
-          platinumbody.indicator = 'C';
-        }
-        // I don't think we will get to this 
-        else if (platinumbody.indicator !== 'C' && (X  === 'f' && M  === 'f' )) {
-          console.log('Indicator was X should now be C also make istbaelig false')
-          platinumbody.istbaelig = 'f'
-          platinumbody.indicator = 'C';
-        }
-
-        //  await platinum.save()
-        // console.log(platinumbody)
-
-        await db.query(`UPDATE platinumbodies SET istbaelig = '${platinumbody.istbaelig}', indicator = '${platinumbody.indicator}' WHERE cusip = '${platinumbody.cusip}' AND date = '2021-07-01';`);
-      }  
- 
-    }
-  });
-
-
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  // console.log(streamMonthPools);
-  // await streamAprilData.pipe(csvAprilStream);
-  await streamPlatinums.pipe(csvStreamPlatinums);
 }
 
 
@@ -208,16 +70,8 @@ const platinumBodyStreamer = async(csv, date) => {
   })
   .on("end", async function() {
     for (let i = 0; i < csvPlatinumMonthBodies.length; i++ ){
-    // for (let i = 0; i < 10; i++ ){    
-
-      // console.log("------------------------------------");
-      // console.log(i);
-      // console.log(csvPools[i][0]);
 
       if (csvPlatinumMonthBodies[i][0] === 'PS' ){
-        // console.log("------------------------------------");
-        // console.log(csvPoolBodies[i][1]);
-        // 36202BYW9 does not have 
 
         if (csvPlatinumMonthBodies[i][16] === ''){
           csvPlatinumMonthBodies[i][16] = null;
@@ -237,83 +91,12 @@ const platinumBodyStreamer = async(csv, date) => {
           console.log(ex)
         }
       }
-    }
-  });
 
-  await streamMonthPlatinumBodies.pipe(csvStreamMonthPlatinumBodies);
-}
-
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// this adds the cpr 
-
-const platinumBodyCPRStreamer = async(csv, date) => {
-  let j = 0;
-  let streamMonthPlatinumBodies = fs.createReadStream(csv)
-  let csvPlatinumMonthBodies = [];
-  let csvStreamMonthPlatinumBodies = fastcsv
-  .parse()
-  .on("data", function(data) {
-    // console.log('here')
-    if (data === ''){
-      data = null
-      console.log(data)
-    } 
-    csvPlatinumMonthBodies.push(data);
-  })
-  .on("end", async function() {
-    for (let i = 1; i < csvPlatinumMonthBodies.length; i++ ){
-    // for (let i = 1; i < 10; i++ ){    
-
-      // console.log("------------------------------------");
-      // console.log(csvPlatinumMonthBodies[i][0]);
-
-      // let platinumbody = await PlatinumBody.findOne({where: {cusip: csvPlatinumMonthBodies[i][0], date }})
-      // let body = await CMOBody.findOne({ where: {cmoheaderId: header.id, month: month}})
-
-      const cusip = csvPlatinumMonthBodies[i][0];
-      let cpr ;
-      if (csvPlatinumMonthBodies[i][1] === ''){
-        cpr = null;
+      if (i === csvPlatinumMonthBodies.length - 1){
+        console.log('--------DONE-------')
       }
-      else {
-        cpr = csvPlatinumMonthBodies[i][1];
-      }
-
-      // const istbaelig = isTBAelig(issuedate, maturitydate, originalface, type, indicator)
-      let [platbody, _] = (await db.query(`SELECT * FROM platinumbodies where cusip = '${cusip}' and date = '${date}';`));
-
-
-      // console.log(platinumbody[0]);
-
-      // console.log(platbody[0]);
-
-      // console.log(platbody[0]['cpr']);
-      // console.log(cusip);
-      // console.log(cpr);
-
-      
-      
-      if (!platbody[0]){
-        // can't find it in database maybe using wrong dates??
-      }
-      else if (platbody[0]['cpr'] === null && cpr !== null){
-        console.log('NULL')
-        await db.query(`UPDATE platinumbodies set cpr = '${cpr} 'where cusip = '${cusip}' and date = '${date}';`)
-        // platinum.cpr = csvPlatinums[i][1]
-        // await platinum.save()
-      }
-      else if (platbody[0]['cpr'] !== (cpr * 1) && cpr !== null) {
-        console.log('CPR UPDATED')
-        console.log(cpr);
-        await db.query(`UPDATE platinumbodies set cpr = '${cpr} 'where cusip = '${cusip}' and date = '${date}';`)
-        // await platinum.save()
-        j++;
-        console.log(j);
-      }  
     
-      
     }
-    
   });
 
   await streamMonthPlatinumBodies.pipe(csvStreamMonthPlatinumBodies);
@@ -394,21 +177,23 @@ async function platCollStreamer(csv, date) {
           console.log(ex)
         }
       }
+
+      if (i === csvMonthCollateral.length - 1){
+        console.log('--------DONE-------')
+      }
+
     }
   });
 
 
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   await streamMonthCollateral.pipe(csvStreamMonthCollateral);
 }
-
 
 
 
 module.exports = {
   platinumStreamer,
   platinumBodyStreamer,
-  platCollStreamer,
-  platinumUpdateStreamer,
-  platinumBodyCPRStreamer
+  platCollStreamer
 };

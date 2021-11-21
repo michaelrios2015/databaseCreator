@@ -30,10 +30,7 @@ const {
 const {
   platinumStreamer,
   platinumBodyStreamer,
-  platCollStreamer,
-  platinumUpdateStreamer,
-  platIstabaeligabletreamer,
-  platinumBodyCPRStreamer
+  platCollStreamer
     } = require('./synchAndSeedHelpers/platinums.js');
 
 
@@ -102,6 +99,7 @@ const {
     
     // So this seems to work fine with just the cusip as primary key
 
+    // poolStreamer('data/pools/monthlySFPS_202104.csv')
     // poolStreamer('data/pools/monthlySFPS_202105.csv')
     // poolStreamer('data/pools/monthlySFPS_202106.csv')
     // poolStreamer('data/pools/monthlySFPS_202107.csv')
@@ -110,6 +108,7 @@ const {
     // poolStreamer('data/pools/monthlySFPS_202110.csv')
 
 
+    // poolBodyStreamer('data/pools/monthlySFPS_202104.csv', '2021-04');
     // poolBodyStreamer('data/pools/monthlySFPS_202105.csv', '2021-05');
     // poolBodyStreamer('data/pools/monthlySFPS_202106.csv', '2021-06');
     // poolBodyStreamer('data/pools/monthlySFPS_202107.csv', '2021-07');
@@ -141,6 +140,7 @@ const {
 
     // -----------Building Platinums one csv file at a time--------------
 
+    // platinumStreamer('data/platinums/platmonPPS_202104.csv')
     // platinumStreamer('data/platinums/platmonPPS_202105.csv')
     // platinumStreamer('data/platinums/platmonPPS_202106.csv')
     // platinumStreamer('data/platinums/platmonPPS_202107.csv')
@@ -148,6 +148,7 @@ const {
     // platinumStreamer('data/platinums/platmonPPS_202109.csv')
     // platinumStreamer('data/platinums/platmonPPS_202110.csv')
 
+    // platinumBodyStreamer('data/platinums/platmonPPS_202104.csv', '2021-04')
     // platinumBodyStreamer('data/platinums/platmonPPS_202105.csv', '2021-05')
     // platinumBodyStreamer('data/platinums/platmonPPS_202106.csv', '2021-06');
     // platinumBodyStreamer('data/platinums/platmonPPS_202107.csv', '2021-07');
@@ -155,10 +156,6 @@ const {
     // platinumBodyStreamer('data/platinums/platmonPPS_202109.csv', '2021-09');
     // platinumBodyStreamer('data/platinums/platmonPPS_202110.csv', '2021-10'); 
 
-    // dont think I am using these anymore 
-    // platinumBodyCPRStreamer('data/platinums/plat_cpr_202107.csv', '2021-06-01')
-    // platinumBodyCPRStreamer('data/platinums/plat_cpr_202107_two.csv', '2021-06-01')
-    // platinumBodyCPRStreamer('data/platinums/plat_cpr_prediction_202108.csv', '2021-07-01')
 
     // don't fully understand if this has a primary key
     // platCollStreamer('data/platinums/platcoll_202105.csv', '2021-05');
@@ -188,7 +185,8 @@ const {
     // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20210922.csv');
     // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20211020.csv');
     // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20211110.csv');
-  
+    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20211117.csv');
+
   };
 
   
