@@ -35,8 +35,7 @@ const {
 
 
 const {
-  streamAndPipeOFinCMO,
-  streamAndPipeUniqueOFinCMO
+  streamAndPipeOFinCMO
 } = require('./synchAndSeedHelpers/allmostallcmos.js')   
 
 const {
@@ -99,93 +98,49 @@ const {
     
     // So this seems to work fine with just the cusip as primary key
 
-    // poolStreamer('data/pools/monthlySFPS_202104.csv')
-    // poolStreamer('data/pools/monthlySFPS_202105.csv')
-    // poolStreamer('data/pools/monthlySFPS_202106.csv')
-    // poolStreamer('data/pools/monthlySFPS_202107.csv')
-    // poolStreamer('data/pools/monthlySFPS_202108.csv')
-    // poolStreamer('data/pools/monthlySFPS_202109.csv')
+    // comes out 6th business day of every month run right away (just change dates)
     // poolStreamer('data/pools/monthlySFPS_202110.csv')
 
-
-    // poolBodyStreamer('data/pools/monthlySFPS_202104.csv', '2021-04');
-    // poolBodyStreamer('data/pools/monthlySFPS_202105.csv', '2021-05');
-    // poolBodyStreamer('data/pools/monthlySFPS_202106.csv', '2021-06');
-    // poolBodyStreamer('data/pools/monthlySFPS_202107.csv', '2021-07');
-    // poolBodyStreamer('data/pools/monthlySFPS_202108.csv', '2021-08');
-    // poolBodyStreamer('data/pools/monthlySFPS_202109.csv', '2021-09');
     // poolBodyStreamer('data/pools/monthlySFPS_202110.csv', '2021-10');
 
-
-    // poolPredictionStreamer('data/pools/ginnie_202106_monthly_predictions_roll.csv', '2021-06')
-    // poolPredictionStreamer('data/pools/ginnie_202107_monthly_predictions_roll.csv', '2021-07')
-    // poolPredictionStreamer('data/pools/ginnie_202108_monthly_predictions_roll.csv', '2021-08')
-    // poolPredictionStreamer('data/pools/ginnie_202109_monthly_predictions_roll.csv', '2021-09')
+    // david gives me runing in psql slightly easier
     // poolPredictionStreamer('data/pools/ginnie_202110_monthly_predictions_roll.csv', '2021-10')
-
-    // poolFHAVAStreamer('data/pools/FHAVATest_20210615.csv', '2021-06');
-    // poolFHAVAStreamer('data/pools/FHAVATest_20210715.csv', '2021-07');
+    
+    // david gives me runing in psql slightly easier
     // mising august and september
     // poolFHAVAStreamer('data/pools/FHAVATest_20211024.csv', '2021-10');
 
-    // Actual CPR STREAMS
-    // actualCPRStreamer('data/pools/actualCPR_202107.csv', '2021-07'); 
-    // actualCPRStreamerTwo('data/pools/actualCPR_202108.csv', '2021-08'); 
+    // Actual CPR STREAMS  david gives me runing in psql slightly easier
     // actualCPRStreamerTwo('data/pools/actualCPR_202109.csv', '2021-09');
 
-    // ACTUAL CDR STREAMER 
-    // actualCDRStreamer('data/pools/actualCDR_202107.csv', '2021-07'); 
-    // actualCDRStreamerTwo('data/pools/actualCDR_202108.csv', '2021-08');
+    // ACTUAL CDR STREAMER david gives me runing in psql slightly easier
     // actualCDRStreamerTwo('data/pools/actualCDR_202109.csv', '2021-09'); 
 
     // -----------Building Platinums one csv file at a time--------------
 
-    // platinumStreamer('data/platinums/platmonPPS_202104.csv')
-    // platinumStreamer('data/platinums/platmonPPS_202105.csv')
-    // platinumStreamer('data/platinums/platmonPPS_202106.csv')
-    // platinumStreamer('data/platinums/platmonPPS_202107.csv')
-    // platinumStreamer('data/platinums/platmonPPS_202108.csv')
-    // platinumStreamer('data/platinums/platmonPPS_202109.csv')
+    // comes out 8th business day of every month run right away (just change dates)
+
     // platinumStreamer('data/platinums/platmonPPS_202110.csv')
 
-    // platinumBodyStreamer('data/platinums/platmonPPS_202104.csv', '2021-04')
-    // platinumBodyStreamer('data/platinums/platmonPPS_202105.csv', '2021-05')
-    // platinumBodyStreamer('data/platinums/platmonPPS_202106.csv', '2021-06');
-    // platinumBodyStreamer('data/platinums/platmonPPS_202107.csv', '2021-07');
-    // platinumBodyStreamer('data/platinums/platmonPPS_202108.csv', '2021-08');
-    // platinumBodyStreamer('data/platinums/platmonPPS_202109.csv', '2021-09');
     // platinumBodyStreamer('data/platinums/platmonPPS_202110.csv', '2021-10'); 
 
 
-    // don't fully understand if this has a primary key
-    // platCollStreamer('data/platinums/platcoll_202105.csv', '2021-05');
-    // platCollStreamer('data/platinums/platcoll_202106.csv', '2021-06');
-    // platCollStreamer('data/platinums/platcoll_202107.csv', '2021-07');
-    // platCollStreamer('data/platinums/platcoll_202108.csv', '2021-08');
-    // platCollStreamer('data/platinums/platcoll_202109.csv', '2021-09');
+    // comes out 8th business day of every month run right away (just change dates)
     // platCollStreamer('data/platinums/platcoll_202110.csv', '2021-10');
 
 
     // ------------------------allmost all cmos -----------------
-    // don't fully understand if this has a primary key
 
-    // ONLY LOAD ONCE OR DATA WILL BE CORRUPTED 
-    // streamAndPipeOFinCMO('data/cmos/allmostAllCMOs.csv', '2021-06');
-    // streamAndPipeOFinCMO('data/cmos/CMOS_202107.csv', '2021-07');
-    // streamAndPipeOFinCMO('data/cmos/CMOS_202108.csv', '2021-08');
-    // streamAndPipeOFinCMO('data/cmos/CMOS_202109.csv', '2021-09');
+    // ONLY LOAD ONCE OR DATA WILL BE CORRUPTED - i cannot think of a good primary key
+    // streamAndPipeOFinCMO('data/cmos/CMOS_202110.csv', '2021-10');
+    // once it's run we use psql to turn it into unique cmos
 
 
     // ------------------------ FED HOLDINGS -----------------
 
-
-    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20210630.csv');
-    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20210714.csv');
-    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20210721.csv');
-    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20210922.csv');
-    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20211020.csv');
+    // comes out weekly the factor is usually old so we stream it then update the
+    // factor with psql 
     // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20211110.csv');
-    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20211117.csv');
 
   };
 
