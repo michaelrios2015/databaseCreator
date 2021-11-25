@@ -23,12 +23,12 @@
     "fs": "0.0.1-security",
     "moment": "^2.29.1",
     "pg": "^8.5.1",
-    "sequelize": "^6.5.0"
+    "sequelize": "^6.11.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/preset-react": "^7.12.7",
-    "axios": "^0.21.0",
+    "axios": "^0.21.4",
     "babel-loader": "^8.2.2",
     "faker": "^5.1.0",
     "nodemon": "^2.0.6",
