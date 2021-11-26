@@ -99,61 +99,26 @@ const {
     
     // So this seems to work fine with just the cusip as primary key
 
-    // poolStreamer('data/pools/monthlySFPS_202104.csv')
-    // poolStreamer('data/pools/monthlySFPS_202105.csv')
-    // poolStreamer('data/pools/monthlySFPS_202106.csv')
-    // poolStreamer('data/pools/monthlySFPS_202107.csv')
-    // poolStreamer('data/pools/monthlySFPS_202108.csv')
-    // poolStreamer('data/pools/monthlySFPS_202109.csv')
     // poolStreamer('data/pools/monthlySFPS_202110.csv')
 
 
-    // poolBodyStreamer('data/pools/monthlySFPS_202104.csv', '2021-04');
-    // poolBodyStreamer('data/pools/monthlySFPS_202105.csv', '2021-05');
-    // poolBodyStreamer('data/pools/monthlySFPS_202106.csv', '2021-06');
-    // poolBodyStreamer('data/pools/monthlySFPS_202107.csv', '2021-07');
-    // poolBodyStreamer('data/pools/monthlySFPS_202108.csv', '2021-08');
-    // poolBodyStreamer('data/pools/monthlySFPS_202109.csv', '2021-09');
     // poolBodyStreamer('data/pools/monthlySFPS_202110.csv', '2021-10');
 
 
-    // poolPredictionStreamer('data/pools/ginnie_202106_monthly_predictions_roll.csv', '2021-06')
-    // poolPredictionStreamer('data/pools/ginnie_202107_monthly_predictions_roll.csv', '2021-07')
-    // poolPredictionStreamer('data/pools/ginnie_202108_monthly_predictions_roll.csv', '2021-08')
-    // poolPredictionStreamer('data/pools/ginnie_202109_monthly_predictions_roll.csv', '2021-09')
     // poolPredictionStreamer('data/pools/ginnie_202110_monthly_predictions_roll.csv', '2021-10')
 
-    // poolFHAVAStreamer('data/pools/FHAVATest_20210615.csv', '2021-06');
-    // poolFHAVAStreamer('data/pools/FHAVATest_20210715.csv', '2021-07');
     // mising august and september
     // poolFHAVAStreamer('data/pools/FHAVATest_20211024.csv', '2021-10');
 
-    // Actual CPR STREAMS
-    // actualCPRStreamer('data/pools/actualCPR_202107.csv', '2021-07'); 
-    // actualCPRStreamerTwo('data/pools/actualCPR_202108.csv', '2021-08'); 
-    // actualCPRStreamerTwo('data/pools/actualCPR_202109.csv', '2021-09');
-
-    // ACTUAL CDR STREAMER 
-    // actualCDRStreamer('data/pools/actualCDR_202107.csv', '2021-07'); 
-    // actualCDRStreamerTwo('data/pools/actualCDR_202108.csv', '2021-08');
-    // actualCDRStreamerTwo('data/pools/actualCDR_202109.csv', '2021-09'); 
 
     // -----------Building Platinums one csv file at a time--------------
 
-    // platinumStreamer('data/platinums/platmonPPS_202104.csv')
-    // platinumStreamer('data/platinums/platmonPPS_202105.csv')
-    // platinumStreamer('data/platinums/platmonPPS_202106.csv')
-    // platinumStreamer('data/platinums/platmonPPS_202107.csv')
-    // platinumStreamer('data/platinums/platmonPPS_202108.csv')
-    // platinumStreamer('data/platinums/platmonPPS_202109.csv')
+    // So when doing it early I do not run this as nothing with change
     // platinumStreamer('data/platinums/platmonPPS_202110.csv')
 
-    // platinumBodyStreamer('data/platinums/platmonPPS_202104.csv', '2021-04')
-    // platinumBodyStreamer('data/platinums/platmonPPS_202105.csv', '2021-05')
-    // platinumBodyStreamer('data/platinums/platmonPPS_202106.csv', '2021-06');
-    // platinumBodyStreamer('data/platinums/platmonPPS_202107.csv', '2021-07');
-    // platinumBodyStreamer('data/platinums/platmonPPS_202108.csv', '2021-08');
-    // platinumBodyStreamer('data/platinums/platmonPPS_202109.csv', '2021-09');
+    // attempts at doing it early use old month as new month
+    // platinumBodyStreamer('data/platinums/platmonPPS_202109.csv', '2021-10');
+    
     // platinumBodyStreamer('data/platinums/platmonPPS_202110.csv', '2021-10'); 
 
 
