@@ -152,6 +152,7 @@ const {
     // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20211110.csv');
     // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20211117.csv');
     // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20211124.csv');
+    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20211201.csv');
 
   };
 
