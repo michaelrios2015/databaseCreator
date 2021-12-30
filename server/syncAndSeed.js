@@ -100,12 +100,12 @@ const {
     // So this seems to work fine with just the cusip as primary key
 
     // poolStreamer('data/pools/monthlySFPS_202110.csv')
-
+    // poolStreamer('data/pools/monthlySFPS_202111.csv')
 
     // poolBodyStreamer('data/pools/monthlySFPS_202110.csv', '2021-10');
+    // poolBodyStreamer('data/pools/monthlySFPS_202111.csv', '2021-11');
 
-
-    // poolPredictionStreamer('data/pools/ginnie_202110_monthly_predictions_roll.csv', '2021-10')
+    // poolPredictionStreamer('data/pools/ginnie_202112_monthly_predictions_roll.csv', '2021-12')
 
     // mising august and september
     // poolFHAVAStreamer('data/pools/FHAVATest_20211024.csv', '2021-10');
@@ -116,19 +116,18 @@ const {
     // So when doing it early I do not run this as nothing with change
     // platinumStreamer('data/platinums/platmonPPS_202110.csv')
 
+    // platinumStreamer('data/platinums/platmonPPS_2021_11.csv')
+
     // attempts at doing it early use old month as new month
-    // platinumBodyStreamer('data/platinums/platmonPPS_202109.csv', '2021-10');
-    
-    // platinumBodyStreamer('data/platinums/platmonPPS_202110.csv', '2021-10'); 
+    // platinumBodyStreamer('data/platinums/platmonPPS_202110.csv', '2021-11'); 
+
+    // platinumBodyStreamer('data/platinums/platmonPPS_2021_11.csv', '2021-11'); 
 
 
     // don't fully understand if this has a primary key
-    // platCollStreamer('data/platinums/platcoll_202105.csv', '2021-05');
-    // platCollStreamer('data/platinums/platcoll_202106.csv', '2021-06');
-    // platCollStreamer('data/platinums/platcoll_202107.csv', '2021-07');
-    // platCollStreamer('data/platinums/platcoll_202108.csv', '2021-08');
-    // platCollStreamer('data/platinums/platcoll_202109.csv', '2021-09');
     // platCollStreamer('data/platinums/platcoll_202110.csv', '2021-10');
+
+    // platCollStreamer('data/platinums/platcoll_2021_11.csv', '2021-11');
 
 
     // ------------------------allmost all cmos -----------------
@@ -139,20 +138,20 @@ const {
     // streamAndPipeOFinCMO('data/cmos/CMOS_202107.csv', '2021-07');
     // streamAndPipeOFinCMO('data/cmos/CMOS_202108.csv', '2021-08');
     // streamAndPipeOFinCMO('data/cmos/CMOS_202109.csv', '2021-09');
+    
+    // streamAndPipeOFinCMO('data/cmos/CMOS_2021_11.csv', '2021-11');
 
 
     // ------------------------ FED HOLDINGS -----------------
 
 
-    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20210630.csv');
-    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20210714.csv');
-    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20210721.csv');
-    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20210922.csv');
-    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20211020.csv');
-    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20211110.csv');
-    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20211117.csv');
-    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20211124.csv');
+
+    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings2021_11_17.csv');
     // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings20211201.csv');
+    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings2021_12_08.csv');
+    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings2021_12_15.csv');
+    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings2021_12_22.csv');
+    // streamAndPipeFedHoldings('data/fedHoldings/FedHoldings2021_12_29.csv');
 
   };
 
