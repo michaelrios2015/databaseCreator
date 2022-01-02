@@ -43,6 +43,9 @@ const streamAndPipeOFinCMO = (cvs, date) => {
       catch(ex){
         console.log(ex)
       }
+      if (i = csvData.length - 1){
+        console.log("--------DONE------------");
+      }
     }
   }
   );
